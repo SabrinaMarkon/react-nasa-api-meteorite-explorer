@@ -4,17 +4,12 @@
   "description": "Use the NASA Meteorite Landings API to allow users to search all known meteorite landings on earth. This is for the pre-work solo project for Chingu Voyage 9",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "test": "jest --colors",
+    "test:watch": "jest --watch --colors",
     "test:coverage": "jest --coverage --colors",
     "start": "webpack-dev-server --mode development",
     "eslint-fix": "eslint --fix \"src/**/*.js\"",
     "scss": "node-sass --watch scss -o css"
-  },
-  "jest": {
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ]
   },
   "repository": {
     "type": "git",

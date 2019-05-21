@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing main App container Should render the page correctly 1`] = `ShallowWrapper {}`;
+
+exports[`Testing main App container The component should match the snapshot 1`] = `
+<div>
+  Main App Component
+</div>
+`;

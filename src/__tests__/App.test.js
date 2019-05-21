@@ -29,6 +29,12 @@ describe('Testing main App container', () => {
     const findit = wrapper.find('div').text();
     expect(findit).toEqual('Main App Component');
   });
+
+  it('The component should match the snapshot', () => {
+    const wrapper = setup();
+    console.log(wrapper);
+    expect(wrapper).toMatchSnapshot();
+  });
 });
 
 

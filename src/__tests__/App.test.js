@@ -4,6 +4,9 @@ import { shallow } from 'enzyme';
 
 // components
 import App from '../containers/App';
+import Nav from '../components/Nav';
+import SearchContainer from '../containers/SearchContainer';
+import ResultsContainer from '../containers/ResultsContainer';
 
 function setup() {
   const wrapper = shallow(<App />);
@@ -12,25 +15,34 @@ function setup() {
 }
 
 describe('Testing main App container', () => {
-  it('Renders the main App component', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<App />, div);
-    ReactDOM.unmountComponentAtNode(div);
+  it('renders the main App component', () => {
+    const fragment = document.createElement('Fragment');
+    ReactDOM.render(<App />, fragment);
+    ReactDOM.unmountComponentAtNode(fragment);
   });
 
-  it('Should have text in the main div', () => {
-    const wrapper = setup();
-    const hastext = wrapper.find('div');
-    expect(hastext).toBeDefined();
+  // it('should have text in the main div', () => {
+  //   const wrapper = setup();
+  //   const hastext = wrapper.find('div');
+  //   expect(hastext).toBeDefined();
+  // });
+
+  it('should render a child Nav component', () => {
+    const wrapper = shallow(<Nav />);
+    expect(wrapper.exists()).toBe(true);
   });
 
-  it('Should have the right text', () => {
-    const wrapper = setup();
-    const findit = wrapper.find('div').text();
-    expect(findit).toEqual('Main App Component');
+  it('should render a child SearchContainer component', () => {
+    const wrapper = shallow(<SearchContainer />);
+    expect(wrapper.exists()).toBe(true);
   });
 
-  it('The component should match the snapshot', () => {
+  it('should render a child ResultsContainer component', () => {
+    const wrapper = shallow(<ResultsContainer />);
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('it should match the snapshot', () => {
     const wrapper = setup();
     console.log(wrapper);
     expect(wrapper).toMatchSnapshot();

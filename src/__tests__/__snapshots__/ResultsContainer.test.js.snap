@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing ResultsContainer component renders the search results box 1`] = `<section />`;

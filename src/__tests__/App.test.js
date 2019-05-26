@@ -21,12 +21,6 @@ describe('Testing main App container', () => {
     ReactDOM.unmountComponentAtNode(fragment);
   });
 
-  // it('should have text in the main div', () => {
-  //   const wrapper = setup();
-  //   const hastext = wrapper.find('div');
-  //   expect(hastext).toBeDefined();
-  // });
-
   it('should render a child Nav component', () => {
     const wrapper = shallow(<Nav />);
     expect(wrapper.exists()).toBe(true);
@@ -42,7 +36,7 @@ describe('Testing main App container', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('it should match the snapshot', () => {
+  it('it should match the App snapshot', () => {
     const wrapper = setup();
     console.log(wrapper);
     expect(wrapper).toMatchSnapshot();

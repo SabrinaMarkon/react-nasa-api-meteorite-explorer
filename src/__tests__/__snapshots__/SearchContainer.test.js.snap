@@ -2,6 +2,8 @@
 
 exports[`Testing the SearchContainer component renders the SearchContainer box 1`] = `
 <div>
-  <Search />
+  <Search
+    doSearch={[Function]}
+  />
 </div>
 `;

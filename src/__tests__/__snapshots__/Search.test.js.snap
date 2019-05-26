@@ -10,6 +10,8 @@ exports[`Testing search form component should match the Search form snapshot 1`]
   <button
     onClick={[Function]}
     type="button"
-  />
+  >
+    Search!
+  </button>
 </form>
 `;

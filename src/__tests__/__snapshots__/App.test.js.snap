@@ -3,7 +3,9 @@
 exports[`Testing main App container it should match the App snapshot 1`] = `
 <Fragment>
   <Nav />
-  <SearchContainer />
+  <SearchContainer
+    doSearch={[Function]}
+  />
   <ResultsContainer />
 </Fragment>
 `;

@@ -16,14 +16,18 @@ export default class App extends Component {
     this.doSearch = this.doSearch.bind(this);
   }
 
-  // componentDidMount() {
-  //   fetch(API_URL)
-  //     .then(res => res.json())
-  //     .then(json => this.setState({ searchinput: json }))
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // }$select=lower(name), annual_salary
+  componentDidMount() {
+    let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json';
+    axios.get(API_URL)
+    .then(res => {
+      const searchresults = res.data;
+      this.setState({
+        searchresults
+      });
+    })
+    .catch(err => { console.log('Error fetching results: ' + err) })
+  }
+  
 
   doSearch = searchinput => {
     let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$where=upper(name)=upper(\'' + searchinput + '\')';

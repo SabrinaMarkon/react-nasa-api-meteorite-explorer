@@ -21,6 +21,11 @@ describe('Testing main App container', () => {
     ReactDOM.unmountComponentAtNode(fragment);
   });
 
+  it('should render a child Header component', () => {
+    const wrapper = shallow(<Header />);
+    expect(wrapper.exists()).toBe(true);
+  });
+
   it('should render a child Nav component', () => {
     const wrapper = shallow(<Nav />);
     expect(wrapper.exists()).toBe(true);
@@ -33,6 +38,11 @@ describe('Testing main App container', () => {
 
   it('should render a child ResultsContainer component', () => {
     const wrapper = shallow(<ResultsContainer />);
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should render a child Footer component', () => {
+    const wrapper = shallow(<Footer />);
     expect(wrapper.exists()).toBe(true);
   });
 

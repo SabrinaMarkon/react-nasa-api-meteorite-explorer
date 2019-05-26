@@ -2,13 +2,19 @@ import React, { Component } from 'react';
 
 export default class Search extends Component {
 
-  state = {
-    searchinput: []
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchinput: ''
+    }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange = event => {
+    let searchinput = (event.target.value);
     this.setState({
-      searchinput: event.target.value
+      searchinput
     });
   }
 

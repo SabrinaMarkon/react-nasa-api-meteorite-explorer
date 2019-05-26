@@ -3,8 +3,16 @@ import Search from '../components/Search';
 
 export default class SearchContainer extends Component {
 
-  doSearch = searchtext => {
-    this.props.doSearch(searchtext);
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    }
+    this.doSearch = this.doSearch.bind(this);
+  }
+
+  doSearch = searchinput => {
+    this.props.doSearch(searchinput);
   }
 
   render() {

@@ -5,7 +5,7 @@ exports[`Testing search form component should match the Search form snapshot 1`]
   <input
     onChange={[Function]}
     type="text"
-    value={Array []}
+    value=""
   />
   <button
     onClick={[Function]}

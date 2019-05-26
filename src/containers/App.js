@@ -4,7 +4,6 @@ import Nav from '../components/Nav';
 import SearchContainer from '../containers/SearchContainer';
 import ResultsContainer from '../containers/ResultsContainer';
 import Footer from '../components/Footer';
-const API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json';
 import axios from 'axios';
 
 export default class App extends Component {
@@ -24,11 +23,11 @@ export default class App extends Component {
   //     .catch(err => {
   //       console.log(err);
   //     });
-  // }
+  // }$select=lower(name), annual_salary
 
   doSearch = searchinput => {
-    console.log(API_URL + '?name=' + searchinput);
-    axios.get(API_URL + '?name=' + searchinput)
+    let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$where=upper(name)=upper(\'' + searchinput + '\')';
+    axios.get(API_URL)
     .then(res => {
       const searchresults = res.data;
       this.setState({

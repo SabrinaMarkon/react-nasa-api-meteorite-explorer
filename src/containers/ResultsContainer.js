@@ -15,7 +15,7 @@ export default class ResultsContainer extends Component {
 
     let results = searchresults.map(row => {
       return (
-        <tr key={row.Id}>
+      <tr key={row.Id}>
         <td>{row.name}</td>
         <td>{row.Id}</td>
         <td>{row.nametype}</td>

@@ -30,7 +30,10 @@ export default class App extends Component {
   
 
   doSearch = searchinput => {
-    let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$where=upper(name)=upper(\'' + searchinput + '\')';
+    let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json';
+    if (searchinput) {
+      API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$where=upper(name)=upper(\'' + searchinput + '\')';
+    }
     axios.get(API_URL)
     .then(res => {
       const searchresults = res.data;

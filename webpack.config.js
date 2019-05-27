@@ -28,6 +28,12 @@ const config = {
           'style-loader',
           'css-loader'
         ]
+      },
+      {
+        test: /\.(mp4|webm|ogv|png|svg|jpg|gif)$/,
+        use: [
+          'file-loader'
+        ]
       }
     ]
   },

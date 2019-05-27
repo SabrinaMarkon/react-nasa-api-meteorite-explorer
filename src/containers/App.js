@@ -17,20 +17,33 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json';
     axios.get(API_URL)
     .then(res => {
-      const searchresults = res.data;
-      this.setState({
-        searchresults
-      });
+      /* Add a check in the .then() handler so this.setState is not called if the component has been unmounted:
+      That is, how should react 'react' when you call setState on a component that has already unmounted. The right way 
+      to handle it would be to cancel the data fetching request if the component will be unmounted for some reason
+      (like user navigating away) */
+      if (this._isMounted) {
+        const searchresults = res.data;
+        this.setState({
+          searchresults
+        });
+      }
     })
     .catch(err => { console.log('Error fetching results: ' + err) })
   }
   
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
 
   doSearch = searchinput => {
-    let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$where=upper(name)=upper(\'' + searchinput + '\')';
+    let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json';
+    if (searchinput) {
+      API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$where=upper(name)=upper(\'' + searchinput + '\')';
+    }
     axios.get(API_URL)
     .then(res => {
       const searchresults = res.data;

@@ -26,6 +26,16 @@ export default class Search extends Component {
   render() {
     return (
     <form>
+      <select>
+        <option value="name">Name</option>
+        <option value="nametype">Name Type</option>
+        <option value="recclass">Rec Class</option>
+        <option value="mass">Mass (g)</option>
+        <option value="fall">Fall</option>
+        <option value="year">Year</option>
+        <option value="reclat">Latitude</option>
+        <option value="reclong">Longitude</option>
+      </select>
       <input 
         type="text"
         value={this.state.searchinput}

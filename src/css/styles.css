@@ -31,7 +31,7 @@ body {
   background: #d34182;
   color: #fff;
 }
-button, input {
+button, input, select {
   background: #d34182;
   color: #fff;
   padding: 10px;

@@ -59,9 +59,11 @@ export default class App extends Component {
       <>
         <Nav />
         <Header />
-        <SearchContainer doSearch={this.doSearch} />
-        <ResultsContainer searchresults={this.state.searchresults} />
-        <Footer />  
+        <div className="fixed-bg">
+          <SearchContainer doSearch={this.doSearch} />
+          <ResultsContainer searchresults={this.state.searchresults} />
+          <Footer />          
+        </div>
       </>
     )
   }

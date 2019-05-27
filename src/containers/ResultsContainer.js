@@ -31,9 +31,9 @@ export default class ResultsContainer extends Component {
 
     );
     return (
-    <section>
+    <section className="center-align">
       <ResultHeadings />
-      <table border="1">
+      <table align="center" border="1">
         <tbody>{results}</tbody>
       </table>
     </section>

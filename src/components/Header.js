@@ -1,13 +1,16 @@
 import React from 'react';
-import Asteroidsjpg from '../images/asteroids-sm.jpg';
-import Asteroidswebm from '../images/asteroids-sm.webm';
-import Asteroidsmp4 from '../images/asteroids-sm.mp4';
-import Asteroidsogv from '../images/asteroids-sm.ogv';
+import Asteroidsjpg from '../images/Asteroids.jpg';
+import Asteroidswebm from '../images/Asteroids.webm';
+import Asteroidsmp4 from '../images/Asteroids.mp4';
+import Asteroidsogv from '../images/Asteroids.ogv';
 
 export default function Header() {
   return (
-    <header className="fullscreen-bg">
-      <video loop muted autoPlay poster={Asteroidsjpg} className="fullscreen-bg__video">
+    <header className="ParallaxVideo">
+      <div className="overlay">
+          <h1>NASA Meteorite Explorer</h1>
+      </div>
+      <video loop muted autoPlay poster={Asteroidsjpg}>
           <source src={Asteroidswebm} type="video/webm" />
           <source src={Asteroidsmp4} type="video/mp4" />
           <source src={Asteroidsogv} type="video/ogg" />
@@ -15,3 +18,4 @@ export default function Header() {
     </header>
   );
 }
+

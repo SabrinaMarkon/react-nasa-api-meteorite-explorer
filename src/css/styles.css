@@ -1,10 +1,113 @@
-html,
 body {
-  height: 100%;
   padding: 0;
-  margin: auto;
-  font-family: 'Muli', Sans-Serif;
-  background: #000;
+  margin: 0;
+  background-color: #000;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
   color: #fff;
-  
+}
+.center-align {
+  text-align: center;
+}
+/* Sections */
+.fixed-bg {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed; 
+  background-image: url("../images/Asteroids.jpg");
+  min-height: 928px; 
+}
+video {
+  display: block; 
+}
+.ParallaxVideo {
+  min-height: 300px;
+  padding-top: 110px; 
+}
+.ParallaxVideo video {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  background: url("../images/Asteroids.jpg") no-repeat;
+  background-size: cover; 
+}
+.ParallaxVideo h1 {
+  color: #fff;
+  font-size: 8em;
+  line-height: 1.1;
+  text-align: center;
+  opacity: 0.8;
+  font-family: "Cinzel", serif;
+  font-weight: 400;
+  text-shadow: 2px 2px 2px #000;
+  margin: 0; 
+}
+.ParallaxVideo .overlay {
+  width: 100%;
+  text-align: center;
+  margin-top: 10px; 
+  color: #FFF;
+  font-family: "Cinzel", serif;
+}
+
+/* Media Queries */
+@media (min-width: 320px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+  .ParallaxVideo h1 {
+    font-size: 2em; 
+  }
+ }
+@media (min-width: 481px) {
+  /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+  .ParallaxVideo h1 {
+    font-size: 3em; 
+  }
+ }
+@media (min-width: 641px) {
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+  .ParallaxVideo h1 {
+    font-size: 4em; 
+  }
+ }
+@media (min-width: 961px) {
+  /* tablet, landscape iPad, lo-res laptops ands desktops */
+  .ParallaxVideo h1 {
+    font-size: 5em; 
+  }
+ }
+@media (min-width: 1025px) {
+  /* big landscape tablets, laptops, and desktops */
+  .ParallaxVideo h1 {
+    font-size: 5em; 
+  }
+}
+@media (min-width: 1281px) {
+  /* hi-res laptops and desktops */
+  .ParallaxVideo h1 {
+    font-size: 6em;
+  }
+}
+@media (min-width: 1381px) {
+  /* hi-res laptops and desktops */
+  .ParallaxVideo h1 {
+    font-size: 7em;
+  }
+}
+@media (min-width: 1500px) {
+  /* hi-res laptops and desktops */
+  .ParallaxVideo h1 {
+    font-size: 8em;
+  }
 }

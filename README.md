@@ -14,3 +14,4 @@ https://sabrinamarkon-nasa-meteorite-explorer.netlify.com
 7. Deploy to Netifly - DONE.
 8. Make CSS attractive - DONE.
 9. Make CSS more responsive.
+10. Need Pagination!

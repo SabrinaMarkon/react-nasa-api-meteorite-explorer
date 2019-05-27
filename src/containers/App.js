@@ -59,7 +59,7 @@ export default class App extends Component {
       <>
         <Nav />
         <Header />
-        <div className="fixed-bg">
+        <div className="grid fixed-bg">
           <SearchContainer doSearch={this.doSearch} />
           <ResultsContainer searchresults={this.state.searchresults} />
           <Footer />          

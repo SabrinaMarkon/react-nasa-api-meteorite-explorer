@@ -11,25 +11,33 @@ body {
 .center-align {
   text-align: center;
 }
-.wrapper {
+.grid {
   display: grid;
 }
-/* Sections */
+.grid-item {
+  grid-column: 1 / 12;
+}
 .fixed-bg {
   background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-image: url('../images/spaceship.jpg');
+  background-repeat: repeat;
   background-attachment: fixed; 
   background-color: #000;
+   /* background-size: cover; */
   /* opacity: 0.9; */
+  /* margin: 0 3rem; */
   min-height: 928px;
   margin-bottom: 4rem;
+  /* border: 10px solid #000000; */
+  -moz-box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);
+  -webkit-box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);
+  box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);
 }
 video {
   display: block; 
 }
 .ParallaxVideo {
-  min-height: 340px;
+  min-height: 335px;
   padding-top: 110px; 
   /* -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); */
@@ -62,6 +70,8 @@ video {
   margin: 0; 
 }
 .ParallaxVideo .overlay {
+  position: fixed;
+  z-index: -99;
   width: 100%;
   text-align: center;
   margin-top: 40px; 
@@ -94,13 +104,13 @@ video {
   color: #fff;
 }
 #madewithlove-name:hover {
-  text-shadow: 1px 1px 1px #fff, -1px -1px 1px #414143;
+  /* text-shadow: 1px 1px 1px #fff, -1px -1px 1px #414143; */
   text-decoration: none;
-  color: #fff;
+  color: #d34182;
 }
 #madewithlove-heart:hover {
   text-shadow: 1px 1px 1px #fff, -1px -1px 1px #414143;
-  color: #a67f78; 
+  color: #d34182; 
 }
 /* Media Queries */
 @media (min-width: 320px) {

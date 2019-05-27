@@ -5,14 +5,11 @@ export default class SearchContainer extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-
-    }
     this.doSearch = this.doSearch.bind(this);
   }
 
-  doSearch = searchinput => {
-    this.props.doSearch(searchinput);
+  doSearch = (searchfield, searchinput) => {
+    this.props.doSearch(searchfield, searchinput);
   }
 
   render() {

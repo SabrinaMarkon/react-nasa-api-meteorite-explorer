@@ -5,9 +5,11 @@ export default class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchinput: ''
+      searchinput: '',
+      searchfield: 'name'
     }
     this.handleChange = this.handleChange.bind(this);
+    this.handleSelected = this.handleSelected.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -18,21 +20,28 @@ export default class Search extends Component {
     });
   }
 
+  handleSelected = event => {
+    let searchfield = (event.target.value);
+    this.setState({
+      searchfield
+    });
+  }
+
   handleSubmit = event => {
     event.preventDefault();
-    this.props.doSearch(this.state.searchinput);
+    this.props.doSearch(this.state.searchfield, this.state.searchinput);
   }
 
   render() {
     return (
     <form>
-      <select>
+      <select value={this.state.searchfield} onChange={this.handleSelected}>
         <option value="name">Name</option>
         <option value="nametype">Name Type</option>
         <option value="recclass">Rec Class</option>
-        <option value="mass">Mass (g)</option>
+        {/* <option value="mass">Mass (g)</option> */}
         <option value="fall">Fall</option>
-        <option value="year">Year</option>
+        {/* <option value="year">Year</option> */}
         <option value="reclat">Latitude</option>
         <option value="reclong">Longitude</option>
       </select>

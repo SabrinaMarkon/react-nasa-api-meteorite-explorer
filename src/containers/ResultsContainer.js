@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import ResultHeadings from '../components/ResultHeadings';
 
 export default class ResultsContainer extends Component {
@@ -13,29 +13,27 @@ export default class ResultsContainer extends Component {
       }
     });
 
-    let results = searchresults.map(row => {
+    let results = searchresults.map((row,i) => {
       return (
-      <tr key={row.Id}>
-        <td>{row.name}</td>
-        <td>{row.Id}</td>
-        <td>{row.nametype}</td>
-        <td>{row.recclass}</td>
-        <td>{row.mass}</td>
-        <td>{row.fall}</td>
-        <td>{row.year}</td>
-        <td>{row.reclat}</td>
-        <td>{row.reclong}</td>
-      </tr>
+        <Fragment key={i}>
+          <div className="grid-item" key={i}>{row.name}</div>
+          <div className="grid-item">{i}</div>
+          <div className="grid-item">{row.nametype}</div>
+          <div className="grid-item">{row.recclass}</div>
+          <div className="grid-item">{row.mass}</div>
+          <div className="grid-item">{row.fall}</div>
+          <div className="grid-item">{row.year}</div>
+          <div className="grid-item">{row.reclat}</div>
+          <div className="grid-item">{row.reclong}</div>
+        </Fragment>
       );
     }
 
     );
     return (
-    <section className="center-align p-2">
+    <section className="grid center-align p-2">
       <ResultHeadings />
-      <table align="center" border="1">
-        <tbody>{results}</tbody>
-      </table>
+      {results}
     </section>
     );
   }

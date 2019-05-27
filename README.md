@@ -11,5 +11,6 @@ https://sabrinamarkon-nasa-meteorite-explorer.netlify.com
 4. Fetch data from API - DONE.
 5. Fetch data from API with a search phrase - DONE.
 6. Fetch data from API by selecting the field for the search phrase.
-7. Deploy to Netifly.
-8. Make CSS attractive.
+7. Deploy to Netifly - DONE.
+8. Make CSS attractive - DONE.
+9. Make CSS more responsive.

@@ -57,6 +57,17 @@ export default class App extends Component {
   doSearch = (searchfield, searchinput) => {
     let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=100&$offset=0';
     if (searchinput) {
+      // check for special characters.
+      let originalsearchinput = searchinput;
+      searchinput = originalsearchinput.replace(/[^a-z0-9,-. ]/gi, '');
+      if (searchinput !== originalsearchinput) {
+        // user included weird characters the server doesn't accept.
+        this.setState({
+          searchresults: [],
+          errormessage: 'Special characters are not allowed except (space, comma, decimal, dash, apostrophe).'
+        }); 
+        return; 
+      }
       API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=100&$offset=0&$where=upper(' + searchfield + ')=upper(\'' + searchinput + '\')';
     }
     axios.get(API_URL)

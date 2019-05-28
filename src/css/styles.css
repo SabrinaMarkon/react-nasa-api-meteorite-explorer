@@ -23,7 +23,6 @@ body {
 .grid > .grid-item {
   border: 1px solid #fff;
   padding: 10px;
-  font-size: smaller;
   overflow: hidden;
   min-width: 0;
 }
@@ -31,14 +30,15 @@ body {
   background: #d34182;
   color: #fff;
 }
-button, input, select {
+.form-input {
   background: #d34182;
   color: #fff;
   padding: 10px;
   margin: 3px;
+  font-family: 'Roboto', sans-serif;
 }
 .user-message {
-  max-width: 300px;
+  max-width: 400px;
   background:#ba38cc;
   color: #fff;
   border: 2px solid #fff;
@@ -48,6 +48,7 @@ button, input, select {
   top: 35px;
   margin-bottom: 30px;
   text-align: center;
+  font-family: 'Roboto', sans-serif !important;
 }
 .fixed-bg {
   background-position: center;
@@ -55,12 +56,8 @@ button, input, select {
   background-repeat: repeat;
   background-attachment: fixed; 
   background-color: #000;
-   /* background-size: cover; */
-  /* opacity: 0.9; */
-  /* margin: 0 3rem; */
   min-height: 928px;
   margin-bottom: 4rem;
-  /* border: 10px solid #000000; */
   -moz-box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);
   -webkit-box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);
   box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);
@@ -71,8 +68,8 @@ video {
 .ParallaxVideo {
   min-height: 335px;
   padding-top: 110px; 
-  /* -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); */
+  /* -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); */
+  /* clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); */
 }
 .ParallaxVideo video {
   position: fixed;
@@ -138,7 +135,10 @@ footer {
   bottom: 0;
 }
 #madewithlove {
-  text-shadow: 1px 1px 1px #fff, -1px -1px 1px #414143;
+  font-size: 1.2rem;
+}
+#madewithlove-name {
+  font-family: 'Roboto', sans-serif !important;
 }
 #madewithlove-name, #madewithlove-heart {
   text-shadow: 0 0 0;
@@ -162,6 +162,15 @@ footer {
     font-size: 2vw;
     padding: 1px;
   }
+  .user-message {
+    font-size: 2vw;
+  }
+  .form-input {
+    font-size: 2vw;
+  }
+  #madewithlove {
+    font-size: 2vw;
+  }
  }
 @media (min-width: 481px) {
   /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
@@ -171,6 +180,15 @@ footer {
   .grid > .grid-item {
     font-size: 2vw;
     padding: 1px;
+  }
+  .user-message {
+    font-size: 2vw;
+  }
+  .form-input {
+    font-size: 2vw;
+  }
+  #madewithlove {
+    font-size: 2vw;
   }
  }
 @media (min-width: 641px) {
@@ -182,6 +200,15 @@ footer {
     font-size: 2vw;
     padding: 2px;
   }
+  .user-message {
+    font-size: 2vw;
+  }
+  .form-input {
+    font-size: 2vw;
+  }
+  #madewithlove {
+    font-size: 2vw;
+  }
  }
 @media (min-width: 961px) {
   /* tablet, landscape iPad, lo-res laptops ands desktops */
@@ -191,6 +218,15 @@ footer {
   .grid > .grid-item {
     font-size: 1rem;
     padding: 5px;
+  }
+  .user-message {
+    font-size: 1rem;
+  }
+  .form-input {
+    font-size: 1rem;
+  }
+  #madewithlove {
+    font-size: 1rem;
   }
  }
 @media (min-width: 1025px) {

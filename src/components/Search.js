@@ -35,7 +35,7 @@ export default class Search extends Component {
   render() {
     return (
     <form>
-      <select value={this.state.searchfield} onChange={this.handleSelected}>
+      <select className="form-input" value={this.state.searchfield} onChange={this.handleSelected}>
         <option value="name">Name</option>
         <option value="nametype">Name Type</option>
         <option value="recclass">Rec Class</option>
@@ -45,12 +45,13 @@ export default class Search extends Component {
         <option value="reclat">Latitude</option>
         <option value="reclong">Longitude</option>
       </select>
-      <input 
+      <input
+        className="form-input"
         type="text"
         value={this.state.searchinput}
         onChange={this.handleChange}
       />
-      <button type="button" onClick={this.handleSubmit}>Search!</button>
+      <button className="form-input" type="button" onClick={this.handleSubmit}>Search!</button>
     </form>
     )
   }

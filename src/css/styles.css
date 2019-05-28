@@ -142,6 +142,7 @@ video {
   }
   .grid > .grid-item {
     font-size: 2vw;
+    padding: 1px;
   }
  }
 @media (min-width: 481px) {
@@ -151,6 +152,7 @@ video {
   }
   .grid > .grid-item {
     font-size: 2vw;
+    padding: 1px;
   }
  }
 @media (min-width: 641px) {
@@ -160,6 +162,7 @@ video {
   }
   .grid > .grid-item {
     font-size: 2vw;
+    padding: 2px;
   }
  }
 @media (min-width: 961px) {
@@ -169,12 +172,17 @@ video {
   }
   .grid > .grid-item {
     font-size: 1rem;
+    padding: 5px;
   }
  }
 @media (min-width: 1025px) {
   /* big landscape tablets, laptops, and desktops */
   .ParallaxVideo h1 {
     font-size: 5rem; 
+  }
+  .grid > .grid-item {
+    font-size: 1rem;
+    padding: 10px;
   }
 }
 @media (min-width: 1281px) {

@@ -18,7 +18,7 @@ export default class App extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$limit=100&$offset=0';
+    let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=100&$offset=0';
     axios.get(API_URL)
     .then(res => {
       /* Add a check in the .then() handler so this.setState is not called if the component has been unmounted:
@@ -40,9 +40,9 @@ export default class App extends Component {
   }
 
   doSearch = (searchfield, searchinput) => {
-    let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$limit=100&$offset=0';
+    let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=100&$offset=0';
     if (searchinput) {
-      API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$limit=100&$offset=0&$where=upper(' + searchfield + ')=upper(\'' + searchinput + '\')';
+      API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=100&$offset=0&$where=upper(' + searchfield + ')=upper(\'' + searchinput + '\')';
     }
     axios.get(API_URL)
     .then(res => {

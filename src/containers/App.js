@@ -11,7 +11,8 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchresults: []
+      searchresults: [],
+      errormessage: ''
     }
     this.doSearch = this.doSearch.bind(this);
   }
@@ -27,12 +28,25 @@ export default class App extends Component {
       (like user navigating away) */
       if (this._isMounted) {
         const searchresults = res.data;
-        this.setState({
-          searchresults
-        });
+        if (searchresults && searchresults.length) {
+          this.setState({
+            searchresults,
+            errormessage: ''
+          });
+        } else {
+          this.setState({
+            searchresults: [],
+            errormessage: 'No Results Found'
+          });
+        }
       }
     })
-    .catch(err => { console.log('Error fetching results: ' + err) })
+    .catch(err => {
+      this.setState({
+        searchresults: [],
+        errormessage: err.response.data.code
+      });
+    })
   }
   
   componentWillUnmount() {
@@ -47,11 +61,31 @@ export default class App extends Component {
     axios.get(API_URL)
     .then(res => {
       const searchresults = res.data;
-      this.setState({
-        searchresults
-      });
+      if (searchresults && searchresults.length) {
+        this.setState({
+          searchresults,
+          errormessage: ''
+        });
+      } else {
+        this.setState({
+          searchresults: [],
+          errormessage: 'No Results Found'
+        });
+      }
+      // console.error(res.data);
+      // console.error(res.status);
+      // console.error(res.headers);
     })
-    .catch(err => { console.log('Error fetching results: ' + err) })
+    .catch(err => { 
+      this.setState({
+        searchresults: [],
+        errormessage: err.response.data.code
+      });
+      // console.error("Error response:");
+      // console.error(err.response.data);
+      // console.error(err.response.status);
+      // console.error(err.response.headers);
+    });
   }
 
   render() {
@@ -60,6 +94,7 @@ export default class App extends Component {
         <Nav />
         <Header />
         <div className="fixed-bg">
+          {this.state.errormessage ? this.state.errormessage : ''}
           <SearchContainer doSearch={this.doSearch} />
           <ResultsContainer searchresults={this.state.searchresults} />
           <Footer />          

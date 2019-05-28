@@ -84,16 +84,12 @@ export default class App extends Component {
           errormessage: 'No Results Found'
         });
       }
-      // console.error(res.data);
-      // console.error(res.status);
-      // console.error(res.headers);
     })
     .catch(err => { 
       this.setState({
         searchresults: [],
         errormessage: err.response.data.code
       });
-      // return Promise.reject(err);
       // console.error("Error response:");
       // console.error(err.response.data);
       // console.error(err.response.status);

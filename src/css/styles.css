@@ -131,6 +131,12 @@ video {
 .pt-3 {
   padding-top: 3rem;
 }
+footer {
+  margin-top: 10px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
 #madewithlove {
   text-shadow: 1px 1px 1px #fff, -1px -1px 1px #414143;
 }

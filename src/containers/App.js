@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
+import UserMessage from '../components/UserMessage';
 import SearchContainer from '../containers/SearchContainer';
 import ResultsContainer from '../containers/ResultsContainer';
 import Footer from '../components/Footer';
@@ -81,6 +82,7 @@ export default class App extends Component {
         searchresults: [],
         errormessage: err.response.data.code
       });
+      // return Promise.reject(err);
       // console.error("Error response:");
       // console.error(err.response.data);
       // console.error(err.response.status);
@@ -94,9 +96,16 @@ export default class App extends Component {
         <Nav />
         <Header />
         <div className="fixed-bg">
-          {this.state.errormessage ? this.state.errormessage : ''}
-          <SearchContainer doSearch={this.doSearch} />
-          <ResultsContainer searchresults={this.state.searchresults} />
+          {this.state.errormessage 
+            ? <>
+              <UserMessage usermessage={this.state.errormessage} />
+              <SearchContainer doSearch={this.doSearch} />
+              </>
+            : <>
+              <SearchContainer doSearch={this.doSearch} />
+              <ResultsContainer searchresults={this.state.searchresults} />
+              </>
+          }
           <Footer />          
         </div>
       </>

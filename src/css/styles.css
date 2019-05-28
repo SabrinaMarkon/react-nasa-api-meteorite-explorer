@@ -37,6 +37,18 @@ button, input, select {
   padding: 10px;
   margin: 3px;
 }
+.user-message {
+  max-width: 300px;
+  background:#ba38cc;
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 10px;
+  margin: auto;
+  position: relative;
+  top: 35px;
+  margin-bottom: 30px;
+  text-align: center;
+}
 .fixed-bg {
   background-position: center;
   background-image: url('../images/spaceship.jpg');

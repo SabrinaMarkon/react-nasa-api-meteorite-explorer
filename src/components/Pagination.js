@@ -98,6 +98,8 @@ export default class Pagination extends Component {
       pageLimit: this.pageLimit,
       totalRecords: this.totalRecords
     }
+    /* calls the onPageChanged() function that was passed
+     in as a prop, with data indicating the new pagination state. */
     this.setState({currentPage}, () => OnPageChanged(paginationData));
   }
 
@@ -106,9 +108,14 @@ export default class Pagination extends Component {
     this.gotoPage(page);
   }
 
-  handleMoveLeft = evt = {
+  handleMoveLeft = evt => {
     evt.preventDefault();
+    this.gotoPage(this.state.currentPage - (this.pageNeighbors * 2) - 1);
+  }
 
+  handleMoveRight = evt => {
+    evt.preventDefault();
+    this.gotoPage(this.state.currentPage + (this.pageNeighbors * 2) + 1);
   }
 
   render() {

@@ -4,23 +4,29 @@ import Nav from '../components/Nav';
 import UserMessage from '../components/UserMessage';
 import SearchContainer from '../containers/SearchContainer';
 import ResultsContainer from '../containers/ResultsContainer';
+import Pagination from '../components/Pagination';
 import Footer from '../components/Footer';
 import axios from 'axios';
+
+const PAGE_LIMIT = 100;
 
 export default class App extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      searchresults: [],
-      errormessage: ''
+      searchResults: [],
+      errorMessage: '',
+      currentResults: [],
+      currentPage: null,
+      totalPages: null
     }
     this.doSearch = this.doSearch.bind(this);
   }
 
   componentDidMount() {
     this._isMounted = true;
-    let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=100&$offset=0';
+    let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&limit=${PAGE_LIMIT}&$offset=0';
     axios.get(API_URL)
     .then(res => {
       /* Add a check in the .then() handler so this.setState is not called if the component has been unmounted:
@@ -28,24 +34,27 @@ export default class App extends Component {
       to handle it would be to cancel the data fetching request if the component will be unmounted for some reason
       (like user navigating away) */
       if (this._isMounted) {
-        const searchresults = res.data;
-        if (searchresults && searchresults.length) {
+        const searchResults = res.data;
+        if (searchResults && searchResults.length) {
           this.setState({
-            searchresults,
-            errormessage: ''
+            searchResults,
+            errorMessage: ''
           });
         } else {
           this.setState({
-            searchresults: [],
-            errormessage: 'No Results Found'
+            searchResults: [],
+            errorMessage: 'No Results Found'
           });
         }
       }
     })
     .catch(err => {
       this.setState({
-        searchresults: [],
-        errormessage: err.response.data.code
+        searchResults: [],
+        errorMessage: err.response.data.code,
+        currentResults: [],
+        currentPage: null,
+        totalPages: null
       });
     })
   }
@@ -54,46 +63,62 @@ export default class App extends Component {
     this._isMounted = false;
   }
 
-  doSearch = (searchfield, searchinput) => {
-    let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=100&$offset=0';
-    if (searchinput) {
+  doSearch = (searchField, searchInput) => {
+    let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=100&$offset=${this.state.currentPage}';
+    if (searchInput) {
       // check for special characters.
-      let originalsearchinput = searchinput;
-      searchinput = originalsearchinput.replace(/[^a-z0-9,-. ]/gi, '');
-      if (searchinput !== originalsearchinput) {
+      let originalSearchInput = searchInput;
+      searchInput = originalSearchInput.replace(/[^a-z0-9,-. ]/gi, '');
+      if (searchInput !== originalSearchInput) {
         // user included weird characters the server doesn't accept.
         this.setState({
-          searchresults: [],
-          errormessage: 'Special characters are not allowed except (space, comma, decimal, dash, apostrophe).'
+          searchResults: [],
+          errorMessage: 'Special characters are not allowed except (space, comma, decimal, dash, apostrophe).'
         }); 
         return; 
       }
-      API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=100&$offset=0&$where=upper(' + searchfield + ')=upper(\'' + searchinput + '\')';
+      API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=100&$offset=0&$where=upper(' + searchField + ')=upper(\'' + searchInput + '\')';
     }
     axios.get(API_URL)
     .then(res => {
-      const searchresults = res.data;
-      if (searchresults && searchresults.length) {
+      const searchResults = res.data;
+      if (searchResults && searchResults.length) {
         this.setState({
-          searchresults,
-          errormessage: ''
+          searchResults,
+          errorMessage: ''
         });
       } else {
         this.setState({
-          searchresults: [],
-          errormessage: 'No Results Found'
+          searchResults: [],
+          errorMessage: 'No Results Found'
         });
       }
     })
     .catch(err => { 
       this.setState({
-        searchresults: [],
-        errormessage: err.response.data.code
+        searchResults: [],
+        errorMessage: err.response.data.code,
+        currentResults: [],
+        currentPage: null,
+        totalPages: null
       });
       // console.error("Error response:");
       // console.error(err.response.data);
       // console.error(err.response.status);
       // console.error(err.response.headers);
+    });
+  }
+
+  onPageChanged = data => {
+    const {currentResults} = this.state;
+    const {currentPage, totalPages, pageLimit} = data;
+    /* -1 to make it zero based */
+    const offset = (currentPage - 1) * pageLimit; 
+    const currentResults = searchResults.slice(offset, offset + pageLimit);
+    this.setState({
+      currentPage,
+      currentResults,
+      totalPages
     });
   }
 
@@ -103,16 +128,17 @@ export default class App extends Component {
         <Nav />
         <Header />
         <div className="fixed-bg">
-          {this.state.errormessage 
+          {this.state.errorMessage 
             ? <>
-              <UserMessage usermessage={this.state.errormessage} />
+              <UserMessage userMessage={this.state.errorMessage} />
               <SearchContainer doSearch={this.doSearch} />
               </>
             : <>
               <SearchContainer doSearch={this.doSearch} />
-              <ResultsContainer searchresults={this.state.searchresults} />
+              <ResultsContainer searchResults={this.state.currentResults} />
               </>
           }
+          <Pagination />
           <Footer />          
         </div>
       </>

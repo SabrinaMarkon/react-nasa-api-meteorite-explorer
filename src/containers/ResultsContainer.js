@@ -4,16 +4,16 @@ import ResultHeadings from '../components/ResultHeadings';
 export default class ResultsContainer extends Component {
 
   render() {
-    let searchresults = Array.from(this.props.searchresults);
+    let searchResults = Array.from(this.props.searchResults);
 
     // format the year property to only show 4 digit year.
-    searchresults.forEach(result => {
+    searchResults.forEach(result => {
       if (result.year) {
         result.year = result.year.slice(0, 4);
       }
     });
 
-    let results = searchresults.map((row,i) => {
+    let results = searchResults.map((row,i) => {
       return (
         <Fragment key={i}>
           <div className="grid-item" key={i}>{row.name}</div>

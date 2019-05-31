@@ -27,7 +27,8 @@ export default class App extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&limit=${PAGE_LIMIT}&$offset=0';
+    let API_URL = `https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=${PAGE_LIMIT}&$offset=0`;
+    console.log(API_URL);
     axios.get(API_URL)
     .then(res => {
       /* Add a check in the .then() handler so this.setState is not called if the component has been unmounted:
@@ -65,7 +66,8 @@ export default class App extends Component {
   }
 
   doSearch = (searchField, searchInput) => {
-    let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=100&$offset=${this.state.currentPage}';
+    let API_URL = `https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=${PAGE_LIMIT}&$offset=${this.state.currentPage}`;
+    console.log(API_URL);
     if (searchInput) {
       // check for special characters.
       let originalSearchInput = searchInput;
@@ -139,7 +141,7 @@ export default class App extends Component {
               <ResultsContainer searchResults={this.state.currentResults} />
               </>
           }
-          <Pagination />
+          <Pagination totalRecords={this.state.searchResults.length} pageLimit={PAGE_LIMIT} pageNeighbours={2} onPageChanged={this.onPageChanged} />
           <Footer />          
         </div>
       </>

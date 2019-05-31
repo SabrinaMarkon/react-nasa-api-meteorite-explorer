@@ -60,7 +60,24 @@ export default class Pagination extends Component {
       const hasRightSpill = (totalPages - endPage) > 1;
       const spillOffset = totalNumbers - (pages.length + 1);
 
-
+      switch(true) {
+        case (hasLeftSpill && !hasRightSpill): {
+          const extraPages = range(startPage - spillOffset, startPage - 1);
+          pages = [LEFT_PAGE, ...extraPages, ...pages];
+          break;
+        }
+        case (!hasLeftSpill && hasRightSpill): {
+          const extraPages = range(endPage + 1, endPage + spillOffset);
+          pages = [...pageNeighbors, ...extraPages, RIGHT_PAGE];
+          break;
+        }
+        case (hasLeftSpill && hasRightSpill):
+        default: {
+          pages = [LEFT_PAGE, ...pageNeighbors, RIGHT_PAGE];
+          break;
+        }
+      }
+      return [1, ...pages, totalPages];
     }
     /* of the totalPages is smaller than the number of blocks to show,
     simply return a range of numbers from 1 to totalPages. */

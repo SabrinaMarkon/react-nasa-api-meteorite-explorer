@@ -22,11 +22,7 @@ export default class Pagination extends Component {
     this.state = {
       currentPage: 1
     }
-    const props = {
-      totalRecords: null, 
-      pageLimit: 100, 
-      pageNeighbors = 0
-    }
+    const { totalRecords = null, pageLimit = 100, pageNeighbors = 0 } = props;
     this.pageLimit = typeof pageLimit === 'number' ? pageLimit: 100;
     this.totalRecords = typeof totalRecords === 'number' ? totalRecords : 0;
     /* pageNeighbors means the page numbers on either side of the current page.

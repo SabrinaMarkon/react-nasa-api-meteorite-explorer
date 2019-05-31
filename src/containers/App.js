@@ -22,6 +22,7 @@ export default class App extends Component {
       totalPages: null
     }
     this.doSearch = this.doSearch.bind(this);
+    this.onPageChanged = this.onPageChanged.bind(this);
   }
 
   componentDidMount() {
@@ -110,7 +111,7 @@ export default class App extends Component {
   }
 
   onPageChanged = data => {
-    const {currentResults} = this.state;
+    const {searchResults} = this.state;
     const {currentPage, totalPages, pageLimit} = data;
     /* -1 to make it zero based */
     const offset = (currentPage - 1) * pageLimit; 

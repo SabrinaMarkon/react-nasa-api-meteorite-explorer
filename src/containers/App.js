@@ -136,7 +136,7 @@ export default class App extends Component {
               <ResultsContainer searchResults={this.state.searchResults} />
               </>
           }
-          {/* <Pagination totalRecords={this.state.searchResults.length} pageLimit={PAGE_LIMIT} pageNeighbours={2} onPageChanged={this.onPageChanged} /> */}
+          <Pagination pageLimit={PAGE_LIMIT} pageNeighbours={2} onPageChanged={this.onPageChanged} />
           <Footer />          
         </div>
       </>

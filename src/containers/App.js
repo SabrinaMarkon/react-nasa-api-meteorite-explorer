@@ -17,9 +17,8 @@ export default class App extends Component {
     this.state = {
       searchResults: [],
       errorMessage: '',
-      currentResults: [],
-      currentPage: null,
-      totalPages: null
+      currentPage: 0,
+      totalPages: 0
     }
     this.doSearch = this.doSearch.bind(this);
     this.onPageChanged = this.onPageChanged.bind(this);
@@ -27,8 +26,7 @@ export default class App extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    let API_URL = `https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=${PAGE_LIMIT}&$offset=0`;
-    console.log(API_URL);
+    let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=' + PAGE_LIMIT + '&$offset=0';
     axios.get(API_URL)
     .then(res => {
       /* Add a check in the .then() handler so this.setState is not called if the component has been unmounted:
@@ -54,9 +52,8 @@ export default class App extends Component {
       this.setState({
         searchResults: [],
         errorMessage: err.response.data.code,
-        currentResults: [],
-        currentPage: null,
-        totalPages: null
+        currentPage: 0,
+        totalPages: 0
       });
     })
   }
@@ -66,8 +63,7 @@ export default class App extends Component {
   }
 
   doSearch = (searchField, searchInput) => {
-    let API_URL = `https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=${PAGE_LIMIT}&$offset=${this.state.currentPage}`;
-    console.log(API_URL);
+    let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=' + PAGE_LIMIT + '&$offset=' + this.state.currentPage;
     if (searchInput) {
       // check for special characters.
       let originalSearchInput = searchInput;
@@ -80,7 +76,7 @@ export default class App extends Component {
         }); 
         return; 
       }
-      API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=100&$offset=0&$where=upper(' + searchField + ')=upper(\'' + searchInput + '\')';
+      API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=' + PAGE_LIMIT + '&$offset=' + this.state.currentPage + '&$where=upper(' + searchField + ')=upper(\'' + searchInput + '\')';
     }
     axios.get(API_URL)
     .then(res => {
@@ -101,9 +97,8 @@ export default class App extends Component {
       this.setState({
         searchResults: [],
         errorMessage: err.response.data.code,
-        currentResults: [],
-        currentPage: null,
-        totalPages: null
+        currentPage: 0,
+        totalPages: 0
       });
       // console.error("Error response:");
       // console.error(err.response.data);
@@ -117,10 +112,10 @@ export default class App extends Component {
     const {currentPage, totalPages, pageLimit} = data;
     /* -1 to make it zero based */
     const offset = (currentPage - 1) * pageLimit; 
-    const currentResults = searchResults.slice(offset, offset + pageLimit);
+    searchResults = searchResults.slice(offset, offset + pageLimit);
     this.setState({
       currentPage,
-      currentResults,
+      searchResults,
       totalPages
     });
   }
@@ -138,10 +133,10 @@ export default class App extends Component {
               </>
             : <>
               <SearchContainer doSearch={this.doSearch} />
-              <ResultsContainer searchResults={this.state.currentResults} />
+              <ResultsContainer searchResults={this.state.searchResults} />
               </>
           }
-          <Pagination totalRecords={this.state.searchResults.length} pageLimit={PAGE_LIMIT} pageNeighbours={2} onPageChanged={this.onPageChanged} />
+          {/* <Pagination totalRecords={this.state.searchResults.length} pageLimit={PAGE_LIMIT} pageNeighbours={2} onPageChanged={this.onPageChanged} /> */}
           <Footer />          
         </div>
       </>

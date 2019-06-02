@@ -24,6 +24,8 @@ export default class App extends Component {
     this.onPageChanged = this.onPageChanged.bind(this);
   }
 
+  // ?$select=count(*)
+
   componentDidMount() {
     this._isMounted = true;
     let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=' + PAGE_LIMIT + '&$offset=0';
@@ -136,7 +138,7 @@ export default class App extends Component {
               <ResultsContainer searchResults={this.state.searchResults} />
               </>
           }
-          <Pagination pageLimit={PAGE_LIMIT} pageNeighbours={2} onPageChanged={this.onPageChanged} />
+          <Pagination totalRecords={300} pageLimit={PAGE_LIMIT} pageNeighbours={2} onPageChanged={this.onPageChanged} />
           <Footer />          
         </div>
       </>

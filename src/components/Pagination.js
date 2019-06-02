@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 
 const LEFT_PAGE = 'LEFT';
@@ -39,9 +39,24 @@ export default class Pagination extends Component {
     this.gotoPage(1);
   }
 
+  gotoPage = page => {
+    const {OnPageChanged = f => f} = this.props;
+    const currentPage = Math.max(0, Math.min(page, this.totalPages));
+    const paginationData = {
+      currentPage,
+      totalPages: this.totalPages,
+      pageLimit: this.pageLimit,
+      totalRecords: this.totalRecords
+    }
+    /* calls the onPageChanged() function that was passed
+     in as a prop, with data indicating the new pagination state. */
+    this.setState({currentPage}, () => OnPageChanged(paginationData));
+  }
+
+
   /* Generates the page numbers to be shown on the pagination control.
   We want the first page and last page to always be visible. */
-  fetchPageNumber = () => {
+  fetchPageNumbers = () => {
     const totalPages = this.totalPages;
     const currentPage = this.state.currentPage;
     const pageNeighbors = this.pageNeighbors;
@@ -85,25 +100,11 @@ export default class Pagination extends Component {
     return range(1, totalPages);
   }
 
-  gotoPage = page => {
-    const {OnPageChanged = f => f} = this.props;
-    const currentPage = Math.max(0, Math.min(page, this.totalPages));
-    const paginationData = {
-      currentPage,
-      totalPages: this.totalPages,
-      pageLimit: this.pageLimit,
-      totalRecords: this.totalRecords
-    }
-    /* calls the onPageChanged() function that was passed
-     in as a prop, with data indicating the new pagination state. */
-    this.setState({currentPage}, () => OnPageChanged(paginationData));
-  }
-
   handleClick = pages => evt => {
     evt.preventDefault();
     this.gotoPage(page);
   }
-
+S
   handleMoveLeft = evt => {
     evt.preventDefault();
     this.gotoPage(this.state.currentPage - (this.pageNeighbors * 2) - 1);

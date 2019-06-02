@@ -109,6 +109,7 @@ export default class App extends Component {
     });
   }
 
+  /* Called with data of the current pagination state only when the current page changes. */
   onPageChanged = data => {
     const {searchResults} = this.state;
     const {currentPage, totalPages, pageLimit} = data;

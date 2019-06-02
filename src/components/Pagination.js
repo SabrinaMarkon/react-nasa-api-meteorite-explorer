@@ -60,6 +60,7 @@ export default class Pagination extends Component {
     const totalPages = this.totalPages;
     const currentPage = this.state.currentPage;
     const pageNeighbors = this.pageNeighbors;
+    console.log(totalPages + '-' + currentPage + '-' + pageNeighbors);
     /* * 2 for each side, left and right of the current page. */
     const totalNumbersToShow = (this.pageNeighbors * 2) + 3;
     /* totalNumbersToShow + 2 for the < and > buttons. */

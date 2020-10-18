@@ -114,10 +114,10 @@ export default class App extends Component {
       const { currentPage, totalPages, pageLimit } = data;
       /* -1 to make it zero based */
       const offset = (currentPage - 1) * pageLimit;
-      searchResults = searchResults.slice(offset, offset + pageLimit);
+      const searchResultsPaginated = searchResults.slice(offset, offset + pageLimit);
       this.setState({
           currentPage,
-          searchResults,
+          searchResultsPaginated,
           totalPages
       });
   }

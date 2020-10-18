@@ -117,7 +117,7 @@ export default class App extends Component {
       const searchResultsPaginated = searchResults.slice(offset, offset + pageLimit);
       this.setState({
           currentPage,
-          searchResultsPaginated,
+          searchResults: searchResultsPaginated,
           totalPages
       });
   }

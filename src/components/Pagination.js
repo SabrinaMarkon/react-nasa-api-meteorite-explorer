@@ -24,7 +24,7 @@ export default class Pagination extends Component {
         const { totalRecords = 0, pageLimit = 100, pageNeighbors = 0 } = props;
         this.pageLimit = typeof pageLimit === 'number' ? pageLimit : 100;
         this.totalRecords = typeof totalRecords === 'number' ? totalRecords : 0;
-        /* pageNeighbors means the page numbers on either side of the current page.
+        /* pageNeighbors means how many page number links are on either side of the current page.
     The minimum value is 0 and the maximum value is 2. If not specified,
     it defaults to 0 as defined in the constructor(). */
         this.pageNeighbors = typeof pageNeighbors === 'number' ?
@@ -34,7 +34,7 @@ export default class Pagination extends Component {
     }
 
     componentDidMount () {
-    // First time rendering.
+    // First time rendering, so show page 1 of the results.
         this.gotoPage(1);
     }
 
@@ -60,7 +60,7 @@ export default class Pagination extends Component {
       const currentPage = this.state.currentPage;
       const pageNeighbors = this.pageNeighbors;
       console.log(totalPages + '-' + currentPage + '-' + pageNeighbors);
-      /* * 2 for each side, left and right of the current page. */
+      /* 2 for each side, left and right of the current page. */
       const totalNumbersToShow = (this.pageNeighbors * 2) + 3;
       /* totalNumbersToShow + 2 for the < and > buttons. */
       const totalBlocksToShow = totalNumbersToShow + 2;
@@ -100,7 +100,7 @@ export default class Pagination extends Component {
       return range(1, totalPages);
   }
 
-  handleClick = pages => evt => {
+  handleClick = page => evt => {
       evt.preventDefault();
       this.gotoPage(page);
   }

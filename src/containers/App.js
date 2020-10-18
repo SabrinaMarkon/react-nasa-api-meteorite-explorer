@@ -64,7 +64,8 @@ export default class App extends Component {
     }
 
   doSearch = (searchField, searchInput) => {
-      let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=' + PAGE_LIMIT + '&$offset=' + this.state.currentPage;
+      let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=' + PAGE_LIMIT + '&$offset=' + this.state.currentPage * PAGE_LIMIT;
+      console.log(API_URL);
       if (searchInput) {
       // check for special characters.
           let originalSearchInput = searchInput;
@@ -110,6 +111,7 @@ export default class App extends Component {
 
   /* Called with data of the current pagination state only when the current page changes. */
   onPageChanged = data => {
+      // this.doSearch('', ''); // ?????? TODO: Fix bug where searchResults are not updated with the next page when the pagination is clicked.
       const { searchResults } = this.state;
       const { currentPage, totalPages, pageLimit } = data;
       /* -1 to make it zero based */

@@ -39,7 +39,6 @@ export default class Pagination extends Component {
     }
 
   gotoPage = page => {
-      const { onPageChanged = f => f } = this.props;
       const currentPage = Math.max(0, Math.min(page, this.totalPages));
       const paginationData = {
           currentPage,
@@ -49,7 +48,8 @@ export default class Pagination extends Component {
       };
       /* calls the onPageChanged() function that was passed
      in as a prop, with data indicating the new pagination state. */
-      this.setState({ currentPage }, () => onPageChanged(paginationData));
+      this.props.onPageChanged(paginationData);
+      this.setState({ currentPage });
   }
 
 

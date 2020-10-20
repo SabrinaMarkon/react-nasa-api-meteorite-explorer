@@ -8,7 +8,7 @@ import Pagination from '../components/Pagination';
 import Footer from '../components/Footer';
 import axios from 'axios';
 
-const PAGE_LIMIT = 100;
+const PAGE_LIMIT = 20;
 
 export default class App extends Component {
     constructor (props) {
@@ -16,8 +16,7 @@ export default class App extends Component {
         this.state = {
             searchResults: [],
             errorMessage: '',
-            currentPage: 0,
-            totalPages: 0
+            currentPage: 0
         };
         this.doSearch = this.doSearch.bind(this);
         this.onPageChanged = this.onPageChanged.bind(this);
@@ -53,8 +52,7 @@ export default class App extends Component {
                 this.setState({
                     searchResults: [],
                     errorMessage: err.response.data.code,
-                    currentPage: 0,
-                    totalPages: 0
+                    currentPage: 0
                 });
             });
     }
@@ -64,7 +62,8 @@ export default class App extends Component {
     }
 
   doSearch = (searchField, searchInput) => {
-      let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=' + PAGE_LIMIT + '&$offset=' + this.state.currentPage * PAGE_LIMIT;
+      const offset = (this.state.currentPage - 1) * PAGE_LIMIT;
+      let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=' + PAGE_LIMIT + '&$offset=' + offset;
       console.log(API_URL);
       if (searchInput) {
       // check for special characters.
@@ -99,8 +98,7 @@ export default class App extends Component {
               this.setState({
                   searchResults: [],
                   errorMessage: err.response.data.code,
-                  currentPage: 0,
-                  totalPages: 0
+                  currentPage: 0
               });
               // console.error("Error response:");
               // console.error(err.response.data);
@@ -111,16 +109,12 @@ export default class App extends Component {
 
   /* Called with data of the current pagination state only when the current page changes. */
   onPageChanged = data => {
-      // this.doSearch('', ''); // ?????? TODO: Fix bug where searchResults are not updated with the next page when the pagination is clicked.
-      const { searchResults } = this.state;
-      const { currentPage, totalPages, pageLimit } = data;
+      const { currentPage } = data;
       /* -1 to make it zero based */
-      const offset = (currentPage - 1) * pageLimit;
-      const searchResultsPaginated = searchResults.slice(offset, offset + pageLimit);
+      //   const offset = (currentPage - 1) * pageLimit;
+      //   const searchResultsPaginated = searchResults.slice(offset, offset + pageLimit);
       this.setState({
-          currentPage,
-          searchResults: searchResultsPaginated,
-          totalPages
+          currentPage
       });
   }
 
@@ -140,7 +134,7 @@ export default class App extends Component {
               <ResultsContainer searchResults={this.state.searchResults} />
               </>
             }
-            <Pagination totalRecords={300} pageLimit={PAGE_LIMIT} pageNeighbours={2}
+            <Pagination totalRecords={300} pageLimit={PAGE_LIMIT} pageNeighbors={0}
                 onPageChanged={this.onPageChanged} />
             <Footer />
         </div>

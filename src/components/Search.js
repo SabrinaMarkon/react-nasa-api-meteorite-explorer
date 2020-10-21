@@ -29,7 +29,10 @@ export default class Search extends Component {
 
   handleSubmit = event => {
       event.preventDefault();
-      this.props.doSearch(this.state.searchfield, this.state.searchinput);
+      this.props.doSearch({
+          searchField: this.state.searchField,
+          searchInput: this.state.searchInput
+      });
   }
 
   render () {

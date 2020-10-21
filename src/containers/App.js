@@ -19,7 +19,7 @@ export default class App extends Component {
             currentPage: 0
         };
         this.doSearch = this.doSearch.bind(this);
-        this.onPageChanged = this.onPageChanged.bind(this);
+        this.goToPage = this.goToPage.bind(this);
     }
 
     // ?$select=count(*)
@@ -61,9 +61,14 @@ export default class App extends Component {
         this._isMounted = false;
     }
 
-  doSearch = (searchField, searchInput) => {
-      /* -1 to make offset zero-based (since API wants 0 for the first page's offset) */
-      const offset = (this.state.currentPage - 1) * PAGE_LIMIT;
+  doSearch = (searchParams) => {
+      let { searchField, searchInput, page } = searchParams;
+      if (!page) {
+          page = this.state.currentPage;
+      }
+      /* -1 to make offset zero-based (since NASA API wants 0 for the first page's offset) */
+      const offset = (page - 1) * PAGE_LIMIT;
+      console.log(offset);
       let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=' + PAGE_LIMIT + '&$offset=' + offset;
       console.log(API_URL);
       if (searchInput) {
@@ -109,11 +114,12 @@ export default class App extends Component {
   }
 
   /* Called with data of the current pagination state only when the current page changes. */
-  onPageChanged = data => {
-      const { currentPage } = data;
+  goToPage = page => {
       this.setState({
-          currentPage
+          currentPage: page
       });
+      console.log('in gotopage: ' + page);
+      this.doSearch({ page });
   }
 
   render () {
@@ -133,7 +139,7 @@ export default class App extends Component {
               </>
             }
             <Pagination totalRecords={300} pageLimit={PAGE_LIMIT} pageNeighbors={0}
-                onPageChanged={this.onPageChanged} />
+                goToPage={this.goToPage} />
             <Footer />
         </div>
       </>

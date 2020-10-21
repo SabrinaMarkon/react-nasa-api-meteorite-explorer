@@ -32,22 +32,10 @@ export default class Pagination extends Component {
         this.pageButtons = range(1, this.totalPages);
     }
 
-    componentDidMount () {
-    // First time rendering, so show page 1 of the results.
-        this.gotoPage(1);
-    }
-
-  gotoPage = page => {
-      /* calls the onPageChanged() function that was passed
-     in as a prop, with data indicating the new pagination state. */
-      this.props.onPageChanged(page);
-      this.setState({ currentPage: page });
-      console.log('currentPage: ' + page);
-  }
-
   handleClick = page => evt => {
       evt.preventDefault();
-      this.props.onPageChanged(page);
+      this.setState({ currentPage: page });
+      this.props.goToPage(page);
   }
 
   render () {
@@ -61,8 +49,10 @@ export default class Pagination extends Component {
                   <ul className="pagination">
                       { this.pageButtons.map((pageButton, index) => {
                           return (
-                              <li key={index} className={`page-item${ currentPage === pageButton ? ' active' : ''}`}>
-                                  <a className="page-link" href="#" onClick={this.handleClick(pageButton)}>{ pageButton }</a>
+                              <li key={index}
+                                  className={`page-item${ currentPage === pageButton ? ' active' : ''}`}>
+                                  <a className="page-link" href="#"
+                                      onClick={this.handleClick(pageButton)}>{ pageButton }</a>
                               </li>
                           );
                       })}
@@ -73,11 +63,11 @@ export default class Pagination extends Component {
   }
 }
 
-/* onPageChanged - is a function that will be called with data
+/* goToPage - is a function that will be called with data
 of the current pagination state only when the current page changes. */
 Pagination.propTypes = {
     totalRecords: PropTypes.number.isRequired,
     pageLimit: PropTypes.number,
     pageNeighbors: PropTypes.number,
-    onPageChanged: PropTypes.func
+    goToPage: PropTypes.func
 };

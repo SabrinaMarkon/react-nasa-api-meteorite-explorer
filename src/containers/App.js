@@ -62,6 +62,7 @@ export default class App extends Component {
     }
 
   doSearch = (searchField, searchInput) => {
+      /* -1 to make offset zero-based (since API wants 0 for the first page's offset) */
       const offset = (this.state.currentPage - 1) * PAGE_LIMIT;
       let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=' + PAGE_LIMIT + '&$offset=' + offset;
       console.log(API_URL);
@@ -110,9 +111,6 @@ export default class App extends Component {
   /* Called with data of the current pagination state only when the current page changes. */
   onPageChanged = data => {
       const { currentPage } = data;
-      /* -1 to make it zero based */
-      //   const offset = (currentPage - 1) * pageLimit;
-      //   const searchResultsPaginated = searchResults.slice(offset, offset + pageLimit);
       this.setState({
           currentPage
       });

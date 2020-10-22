@@ -32,35 +32,35 @@ export default class Pagination extends Component {
         this.pageButtons = range(1, this.totalPages);
     }
 
-  handleClick = page => evt => {
-      evt.preventDefault();
-      this.setState({ currentPage: page });
-      this.props.goToPage(page);
-  }
+    handleClick = page => evt => {
+        evt.preventDefault();
+        this.setState({ currentPage: page });
+        this.props.goToPage(page);
+    }
 
-  render () {
-      if (!this.totalRecords || this.totalPages === 1) {
-          return null;
-      }
-      const { currentPage } = this.state;
-      return (
-          <Fragment>
-              <nav aria-label="Meteorite Database Pagination">
-                  <ul className="pagination">
-                      { this.pageButtons.map((pageButton, index) => {
-                          return (
-                              <li key={index}
-                                  className={`page-item${ currentPage === pageButton ? ' active' : ''}`}>
-                                  <a className="page-link" href="#"
-                                      onClick={this.handleClick(pageButton)}>{ pageButton }</a>
-                              </li>
-                          );
-                      })}
-                  </ul>
-              </nav>
-          </Fragment>
-      );
-  }
+    render () {
+        if (!this.totalRecords || this.totalPages === 1) {
+            return null;
+        }
+        const { currentPage } = this.state;
+        return (
+            <Fragment>
+                <nav aria-label="Meteorite Database Pagination">
+                    <ul className="pagination">
+                        { this.pageButtons.map((pageButton, index) => {
+                            return (
+                                <li key={index}
+                                    className={`page-item${ currentPage === pageButton ? ' active' : ''}`}>
+                                    <a className="page-link" href="#"
+                                        onClick={this.handleClick(pageButton)}>{ pageButton }</a>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </nav>
+            </Fragment>
+        );
+    }
 }
 
 /* goToPage - is a function that will be called with data

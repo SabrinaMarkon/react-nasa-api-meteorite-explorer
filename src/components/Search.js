@@ -5,8 +5,8 @@ export default class Search extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            searchinput: '',
-            searchfield: 'name'
+            searchInput: '',
+            searchField: 'name'
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSelected = this.handleSelected.bind(this);
@@ -14,16 +14,16 @@ export default class Search extends Component {
     }
 
   handleChange = event => {
-      let searchinput = (event.target.value);
+      let searchInput = (event.target.value);
       this.setState({
-          searchinput
+          searchInput
       });
   }
 
   handleSelected = event => {
-      let searchfield = (event.target.value);
+      let searchField = (event.target.value);
       this.setState({
-          searchfield
+          searchField
       });
   }
 
@@ -38,7 +38,7 @@ export default class Search extends Component {
   render () {
       return (
           <form>
-              <select className="form-input" value={this.state.searchfield} onChange={this.handleSelected}>
+              <select className="form-input" value={this.state.searchField} onChange={this.handleSelected}>
                   <option value="name">Name</option>
                   <option value="nametype">Name Type</option>
                   <option value="recclass">Rec Class</option>
@@ -51,7 +51,7 @@ export default class Search extends Component {
               <input
                   className="form-input"
                   type="text"
-                  value={this.state.searchinput}
+                  value={this.state.searchInput}
                   onChange={this.handleChange}
               />
               <button className="form-input" type="button" onClick={this.handleSubmit}>Search!</button>

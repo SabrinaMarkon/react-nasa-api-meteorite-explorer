@@ -35,7 +35,7 @@ export default class App extends Component {
         let { searchField, searchInput, page = 1 } = searchParams;
         /* -1 to make offset zero-based (since NASA API wants 0 for the first page's offset) */
         const offset = (page - 1) * PAGE_LIMIT;
-        let API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=' + PAGE_LIMIT + '&$offset=' + offset;
+        let API_URL = `https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=${PAGE_LIMIT}&$offset=${offset}`;
         if (searchInput) {
         // check for special characters.
             let originalSearchInput = searchInput;
@@ -48,7 +48,7 @@ export default class App extends Component {
                 });
                 return;
             }
-            API_URL = 'https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=' + PAGE_LIMIT + '&$offset=' + this.state.currentPage + '&$where=upper(' + searchField + ')=upper(\'' + searchInput + '\')';
+            API_URL = `https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=${PAGE_LIMIT}&$offset=${offset}&${searchField}='${searchInput}'`;
         }
         axios.get(API_URL)
             .then(res => {

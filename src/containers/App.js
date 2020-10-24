@@ -33,6 +33,7 @@ export default class App extends Component {
 
     doSearch = (searchParams) => {
         let { searchField, searchInput, page = 1 } = searchParams;
+        console.log(this.state.currentPage);
         /* -1 to make offset zero-based (since NASA API wants 0 for the first page's offset) */
         const offset = (page - 1) * PAGE_LIMIT;
         let API_URL = `https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=${PAGE_LIMIT}&$offset=${offset}`;
@@ -101,10 +102,10 @@ export default class App extends Component {
                     <>
                 <SearchContainer doSearch={this.doSearch} />
                 <ResultsContainer searchResults={this.state.searchResults} />
-                </>
-                }
                 <Pagination totalRecords={300} pageLimit={PAGE_LIMIT} pageNeighbors={0}
                     goToPage={this.goToPage} />
+                </>
+                }
                 <Footer />
             </div>
         </>

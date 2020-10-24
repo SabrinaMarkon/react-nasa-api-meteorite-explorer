@@ -37,7 +37,7 @@ export default class Search extends Component {
 
   render () {
       return (
-          <form>
+          <form onSubmit={this.handleSubmit}>
               <select className="form-input" value={this.state.searchField} onChange={this.handleSelected}>
                   <option value="name">Name</option>
                   <option value="nametype">Name Type</option>

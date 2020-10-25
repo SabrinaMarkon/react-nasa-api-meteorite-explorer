@@ -15,10 +15,12 @@ const range = (from, to, step = 1) => {
 export default class Pagination extends Component {
     constructor (props) {
         super(props);
-        this.state = {
-            currentPage: 1
-        };
         this.handleClick = this.handleClick.bind(this);
+
+        // Figure out how many pages and pagination buttons there should be:
+        this.totalPages = Math.ceil(this.props.totalRecords / this.props.pageLimit);
+        this.pageButtons = range(1, this.totalPages);
+        console.log(this.props.totalRecords);
 
     //     let { totalRecords, pageLimit, pageNeighbors } = this.props;
     //     // Validate prop values:
@@ -30,21 +32,21 @@ export default class Pagination extends Component {
     //     this.pageNeighbors = typeof pageNeighbors === 'number' ?
     //         Math.max(0, Math.min(pageNeighbors, 2)) :
     //         0;
-    //     this.totalPages = Math.ceil(this.duhtotalRecords / pageLimit);
-    //     this.pageButtons = range(1, this.totalPages);
     }
 
-    handleClick = page => evt => {
-        evt.preventDefault();
-        this.setState({ currentPage: page });
-        this.props.goToPage(page);
+    handleClick = pageButton => event => {
+        event.preventDefault();
+        this.props.goToPage({
+            searchField: this.props.searchField,
+            searchInput: this.props.searchInput,
+            currentPage: pageButton
+        });
     }
 
     render () {
-        if (!this.duhtotalRecords || this.totalPages === 1) {
+        if (!this.props.totalRecords || this.totalPages === 1) {
             return null;
         }
-        const { currentPage } = this.state;
         return (
             <Fragment>
                 <nav aria-label="Meteorite Database Pagination">
@@ -52,7 +54,7 @@ export default class Pagination extends Component {
                         { this.pageButtons.map((pageButton, index) => {
                             return (
                                 <li key={index}
-                                    className={`page-item${ currentPage === pageButton ? ' active' : ''}`}>
+                                    className={`page-item${ this.props.currentPage === pageButton ? ' active' : ''}`}>
                                     <a className="page-link" href="#"
                                         onClick={this.handleClick(pageButton)}>{ pageButton }</a>
                                 </li>
@@ -68,8 +70,11 @@ export default class Pagination extends Component {
 /* goToPage - is a function that will be called with data
 of the current pagination state only when the current page changes. */
 Pagination.propTypes = {
-    goToPage: PropTypes.func,
     pageLimit: PropTypes.number,
     pageNeighbors: PropTypes.number,
-    currentPage: PropTypes.number
+    goToPage: PropTypes.func,
+    searchField: PropTypes.string,
+    searchInput: PropTypes.string,
+    currentPage: PropTypes.number,
+    totalRecords: PropTypes.number
 };

@@ -18,7 +18,8 @@ export default class App extends Component {
             errorMessage: '',
             searchField: '',
             searchInput: '',
-            currentPage: 1
+            currentPage: 1,
+            totalRecords: 0
         };
         this.doSearch = this.doSearch.bind(this);
         this.goToPage = this.goToPage.bind(this);
@@ -45,13 +46,14 @@ export default class App extends Component {
         /* -1 to make offset zero-based (since NASA API wants 0 for the first page's offset) */
         const offset = (currentPage - 1) * PAGE_LIMIT;
         let API_URL = `https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=${PAGE_LIMIT}&$offset=${offset}`;
-        // if searchInput is not blank (either by user input or existing state):
+
+        // When searchInput is not blank:
         if (searchInput) {
-        // check for special characters.
+        // Check for special characters that aren't allowed:
             let originalSearchInput = searchInput;
             searchInput = originalSearchInput.replace(/[^a-z0-9,-. ]/gi, '');
             if (searchInput !== originalSearchInput) {
-                // user included weird characters the server doesn't accept.
+                // User included weird characters the server doesn't accept.
                 this.setState({
                     searchField: '',
                     searchInput: '',
@@ -60,11 +62,43 @@ export default class App extends Component {
                 });
                 return;
             }
-        }
 
-        if (searchInput) {
-            // add search info since it was submitted.
-            API_URL += `&${searchField}='${searchInput}'`;
+            // Add search info since it was submitted.
+            API_URL = `https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=${PAGE_LIMIT}&$offset=${offset}&${searchField}='${searchInput}'`;
+
+            // Get total count of all matching records:
+            let TOTALCOUNT_URL = "https://data.nasa.gov/resource/gh4g-9sfh.json";
+            axios.get(TOTALCOUNT_URL + "?$select=count(*)&" + searchField + "='" + searchInput + "'")
+                .then(res => {
+                    if (this._isMounted) {
+                        const countResults = res.data[0].count;
+                        console.log(countResults);
+                    }
+                })
+                .catch(err => {
+                    this.setState({
+                        searchResults: [],
+                        errorMessage: err.response.data.code,
+                        currentPage: 1
+                    });
+                });
+        } else {
+            // Get total count of all records since no search parameters are included:
+            let TOTALCOUNT_URL = "https://data.nasa.gov/resource/gh4g-9sfh.json";
+            axios.get(TOTALCOUNT_URL + "?$select=count(*)")
+                .then(res => {
+                    if (this._isMounted) {
+                        const countResults = res.data[0].count;
+                        console.log(countResults);
+                    }
+                })
+                .catch(err => {
+                    this.setState({
+                        searchResults: [],
+                        errorMessage: err.response.data.code,
+                        currentPage: 1
+                    });
+                });
         }
 
         axios.get(API_URL)
@@ -88,7 +122,7 @@ export default class App extends Component {
                 this.setState({
                     searchResults: [],
                     errorMessage: err.response.data.code,
-                    currentPage: 0
+                    currentPage: 1
                 });
                 //   console.error("Error response:");
                 //   console.error(err.response.data);
@@ -97,7 +131,7 @@ export default class App extends Component {
             });
     }
 
-    /* Called with data of the current pagination state only when the current page changes. */
+    /* Called with data of the current pagination state to setState, then carry on to doSearch method: */
     goToPage = (searchParams) => {
         this.setState({
             searchField: searchParams.searchField,
@@ -120,8 +154,15 @@ export default class App extends Component {
                     <>
                 <SearchContainer goToPage={this.goToPage} currentPage={this.state.currentPage} />
                 <ResultsContainer searchResults={this.state.searchResults} currentPage={this.state.currentPage} />
-                <Pagination pageLimit={PAGE_LIMIT} pageNeighbors={0}
-                    goToPage={this.goToPage} currentPage={this.state.currentPage} />
+                <Pagination
+                    pageLimit={PAGE_LIMIT}
+                    pageNeighbors={0}
+                    goToPage={this.goToPage}
+                    searchField={this.state.searchField}
+                    searchInput={this.state.searchInput}
+                    currentPage={this.state.currentPage}
+                    totalRecords={this.state.totalRecords}
+                />
                 </>
                 }
                 <Footer />

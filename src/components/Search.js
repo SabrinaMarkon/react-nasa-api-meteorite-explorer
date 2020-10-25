@@ -11,6 +11,7 @@ export default class Search extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSelected = this.handleSelected.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleResetSearch = this.handleResetSearch.bind(this);
     }
 
   handleChange = event => {
@@ -36,6 +37,15 @@ export default class Search extends Component {
       });
   }
 
+  handleResetSearch = event => {
+      event.preventDefault();
+      this.props.goToPage({
+          searchField: '',
+          searchInput: '',
+          currentPage: 1
+      });
+  }
+
   render () {
       return (
           <form onSubmit={this.handleSubmit}>
@@ -56,6 +66,7 @@ export default class Search extends Component {
                   onChange={this.handleChange}
               />
               <button className="form-input" type="button" onClick={this.handleSubmit}>Search!</button>
+              <button className="form-input" type="button" onClick={this.handleResetSearch}>Reset</button>
           </form>
       );
   }

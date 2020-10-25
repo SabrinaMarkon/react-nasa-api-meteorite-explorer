@@ -29,9 +29,10 @@ export default class Search extends Component {
 
   handleSubmit = event => {
       event.preventDefault();
-      this.props.doSearch({
+      this.props.goToPage({
           searchField: this.state.searchField,
-          searchInput: this.state.searchInput
+          searchInput: this.state.searchInput,
+          currentPage: this.props.currentPage
       });
   }
 
@@ -61,5 +62,6 @@ export default class Search extends Component {
 }
 
 Search.propTypes = {
-    doSearch: PropTypes.func
+    goToPage: PropTypes.func,
+    currentPage: PropTypes.number
 };

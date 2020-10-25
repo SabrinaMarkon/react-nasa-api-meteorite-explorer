@@ -5,22 +5,23 @@ import PropTypes from 'prop-types';
 export default class SearchContainer extends Component {
     constructor (props) {
         super(props);
-        this.doSearch = this.doSearch.bind(this);
+        this.goToPage = this.goToPage.bind(this);
     }
 
-  doSearch = (searchfield, searchinput) => {
-      this.props.doSearch(searchfield, searchinput);
+  goToPage = (searchParams) => {
+      this.props.goToPage(searchParams);
   }
 
   render () {
       return (
           <div className="center-align pt-2">
-              <Search doSearch={this.doSearch} />
+              <Search goToPage={this.goToPage} currentPage={this.props.currentPage} />
           </div>
       );
   }
 }
 
 SearchContainer.propTypes = {
-    doSearch: PropTypes.func
+    goToPage: PropTypes.func,
+    currentPage: PropTypes.number
 };

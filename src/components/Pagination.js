@@ -18,18 +18,20 @@ export default class Pagination extends Component {
         this.state = {
             currentPage: 1
         };
-        let { totalRecords, pageLimit, pageNeighbors } = props;
-        // Validate prop values:
-        pageLimit = typeof pageLimit === 'number' ? pageLimit : 100;
-        this.totalRecords = typeof totalRecords === 'number' ? totalRecords : 0;
-        /* pageNeighbors means how many page number links are on either side of the current page.
-    The minimum value is 0 and the maximum value is 2. If not specified,
-    it defaults to 0 as defined in the constructor(). */
-        this.pageNeighbors = typeof pageNeighbors === 'number' ?
-            Math.max(0, Math.min(pageNeighbors, 2)) :
-            0;
-        this.totalPages = Math.ceil(this.totalRecords / pageLimit);
-        this.pageButtons = range(1, this.totalPages);
+        this.handleClick = this.handleClick.bind(this);
+
+    //     let { totalRecords, pageLimit, pageNeighbors } = this.props;
+    //     // Validate prop values:
+    //     pageLimit = typeof pageLimit === 'number' ? pageLimit : 100;
+    //     this.duhtotalRecords = typeof totalRecords === 'number' ? totalRecords : 0;
+    //     /* pageNeighbors means how many page number links are on either side of the current page.
+    // The minimum value is 0 and the maximum value is 2. If not specified,
+    // it defaults to 0 as defined in the constructor(). */
+    //     this.pageNeighbors = typeof pageNeighbors === 'number' ?
+    //         Math.max(0, Math.min(pageNeighbors, 2)) :
+    //         0;
+    //     this.totalPages = Math.ceil(this.duhtotalRecords / pageLimit);
+    //     this.pageButtons = range(1, this.totalPages);
     }
 
     handleClick = page => evt => {
@@ -39,7 +41,7 @@ export default class Pagination extends Component {
     }
 
     render () {
-        if (!this.totalRecords || this.totalPages === 1) {
+        if (!this.duhtotalRecords || this.totalPages === 1) {
             return null;
         }
         const { currentPage } = this.state;
@@ -66,8 +68,8 @@ export default class Pagination extends Component {
 /* goToPage - is a function that will be called with data
 of the current pagination state only when the current page changes. */
 Pagination.propTypes = {
-    totalRecords: PropTypes.number.isRequired,
+    goToPage: PropTypes.func,
     pageLimit: PropTypes.number,
     pageNeighbors: PropTypes.number,
-    goToPage: PropTypes.func
+    currentPage: PropTypes.number
 };

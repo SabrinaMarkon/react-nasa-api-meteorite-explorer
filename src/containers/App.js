@@ -16,6 +16,8 @@ export default class App extends Component {
         this.state = {
             searchResults: [],
             errorMessage: '',
+            searchField: '',
+            searchInput: '',
             currentPage: 1
         };
         this.doSearch = this.doSearch.bind(this);
@@ -24,19 +26,26 @@ export default class App extends Component {
 
     componentDidMount () {
         this._isMounted = true;
-        this.goToPage(1);
+        this.goToPage({
+            searchField: '',
+            searchInput: '',
+            currentPage: 1
+        });
     }
 
     componentWillUnmount () {
         this._isMounted = false;
     }
 
-    doSearch = (searchParams) => {
-        let { searchField, searchInput, page = 1 } = searchParams;
-        console.log(this.state.currentPage);
+    doSearch = () => {
+        let currentPage = this.state.currentPage;
+        let searchField = this.state.searchField;
+        let searchInput = this.state.searchInput;
+
         /* -1 to make offset zero-based (since NASA API wants 0 for the first page's offset) */
-        const offset = (page - 1) * PAGE_LIMIT;
+        const offset = (currentPage - 1) * PAGE_LIMIT;
         let API_URL = `https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=${PAGE_LIMIT}&$offset=${offset}`;
+        // if searchInput is not blank (either by user input or existing state):
         if (searchInput) {
         // check for special characters.
             let originalSearchInput = searchInput;
@@ -44,13 +53,20 @@ export default class App extends Component {
             if (searchInput !== originalSearchInput) {
                 // user included weird characters the server doesn't accept.
                 this.setState({
+                    searchField: '',
+                    searchInput: '',
                     searchResults: [],
                     errorMessage: 'Special characters are not allowed except (space, comma, decimal, dash, apostrophe).'
                 });
                 return;
             }
-            API_URL = `https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=${PAGE_LIMIT}&$offset=${offset}&${searchField}='${searchInput}'`;
         }
+
+        if (searchInput) {
+            // add search info since it was submitted.
+            API_URL += `&${searchField}='${searchInput}'`;
+        }
+
         axios.get(API_URL)
             .then(res => {
                 if (this._isMounted) {
@@ -82,10 +98,12 @@ export default class App extends Component {
     }
 
     /* Called with data of the current pagination state only when the current page changes. */
-    goToPage = page => {
+    goToPage = (searchParams) => {
         this.setState({
-            currentPage: page
-        }, () => this.doSearch({ page }));
+            searchField: searchParams.searchField,
+            searchInput: searchParams.searchInput,
+            currentPage: searchParams.currentPage
+        }, () => this.doSearch());
     }
 
     render () {
@@ -97,13 +115,13 @@ export default class App extends Component {
                 {this.state.errorMessage ?
                     <>
                 <UserMessage userMessage={this.state.errorMessage} />
-                <SearchContainer doSearch={this.doSearch} />
+                <SearchContainer goToPage={this.goToPage} currentPage={this.state.currentPage} />
                 </> :
                     <>
-                <SearchContainer doSearch={this.doSearch} />
-                <ResultsContainer searchResults={this.state.searchResults} />
-                <Pagination totalRecords={300} pageLimit={PAGE_LIMIT} pageNeighbors={0}
-                    goToPage={this.goToPage} />
+                <SearchContainer goToPage={this.goToPage} currentPage={this.state.currentPage} />
+                <ResultsContainer searchResults={this.state.searchResults} currentPage={this.state.currentPage} />
+                <Pagination pageLimit={PAGE_LIMIT} pageNeighbors={0}
+                    goToPage={this.goToPage} currentPage={this.state.currentPage} />
                 </>
                 }
                 <Footer />

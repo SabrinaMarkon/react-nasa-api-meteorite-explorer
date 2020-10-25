@@ -26,7 +26,7 @@ export default function Pagination (props) {
     }
 
     useEffect(() => {
-        const getPageButtons = async () => {
+        (async function getPaginationButtons () {
             try {
                 const resp = await axios.get(TOTALCOUNT_URL);
                 const totalRecords = parseInt(resp.data[0].count, 10);
@@ -39,8 +39,7 @@ export default function Pagination (props) {
                 // Handle Error Here
                 console.error(err);
             }
-        };
-        getPageButtons();
+        })();
     }, [props.searchInput]);
 
     const handleClick = pageButton => event => {

@@ -8,7 +8,7 @@ import Pagination from '../components/Pagination';
 import Footer from '../components/Footer';
 import axios from 'axios';
 
-const PAGE_LIMIT = 200;
+const PAGE_LIMIT = 100;
 
 export default class App extends Component {
     constructor (props) {

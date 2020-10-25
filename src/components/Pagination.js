@@ -1,5 +1,8 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+// eslint-disable-next-line no-unused-vars
+import regeneratorRuntime from 'regenerator-runtime'; // async/await support for babel.
 
 // Create a range of numbers ie. range(1, 5) => [1, 2, 3, 4, 5]
 const range = (from, to, step = 1) => {
@@ -12,59 +15,63 @@ const range = (from, to, step = 1) => {
     return range;
 };
 
-export default class Pagination extends Component {
-    constructor (props) {
-        super(props);
-        this.handleClick = this.handleClick.bind(this);
+export default function Pagination (props) {
+    const [totalPages, setTotalPages] = useState(1);
+    const [pageButtons, setpageButtons] = useState([]);
 
-        // Figure out how many pages and pagination buttons there should be:
-        this.totalPages = Math.ceil(this.props.totalRecords / this.props.pageLimit);
-        this.pageButtons = range(1, this.totalPages);
-        console.log(this.props.totalRecords);
-
-    //     let { totalRecords, pageLimit, pageNeighbors } = this.props;
-    //     // Validate prop values:
-    //     pageLimit = typeof pageLimit === 'number' ? pageLimit : 100;
-    //     this.duhtotalRecords = typeof totalRecords === 'number' ? totalRecords : 0;
-    //     /* pageNeighbors means how many page number links are on either side of the current page.
-    // The minimum value is 0 and the maximum value is 2. If not specified,
-    // it defaults to 0 as defined in the constructor(). */
-    //     this.pageNeighbors = typeof pageNeighbors === 'number' ?
-    //         Math.max(0, Math.min(pageNeighbors, 2)) :
-    //         0;
+    let TOTALCOUNT_URL = "https://data.nasa.gov/resource/gh4g-9sfh.json?$select=count%28*%29";
+    if (props.searchInput) {
+        TOTALCOUNT_URL = "https://data.nasa.gov/resource/gh4g-9sfh.json?$select=count%28*%29&" +
+        props.searchField + "=%27" + props.searchInput + "%27";
     }
 
-    handleClick = pageButton => event => {
+    useEffect(() => {
+        const getPageButtons = async () => {
+            try {
+                const resp = await axios.get(TOTALCOUNT_URL);
+                const totalRecords = parseInt(resp.data[0].count, 10);
+                // Figure out how many pages and pagination buttons there should be:
+                const totalPages = Math.ceil(totalRecords / props.pageLimit);
+                setTotalPages(totalPages);
+                let pageButtons = range(1, totalPages);
+                setpageButtons(pageButtons);
+            } catch (err) {
+                // Handle Error Here
+                console.error(err);
+            }
+        };
+        getPageButtons();
+    }, [props.searchInput]);
+
+    const handleClick = pageButton => event => {
         event.preventDefault();
-        this.props.goToPage({
-            searchField: this.props.searchField,
-            searchInput: this.props.searchInput,
+        props.goToPage({
+            searchField: props.searchField,
+            searchInput: props.searchInput,
             currentPage: pageButton
         });
-    }
+    };
 
-    render () {
-        if (!this.props.totalRecords || this.totalPages === 1) {
-            return null;
-        }
-        return (
-            <Fragment>
-                <nav aria-label="Meteorite Database Pagination">
-                    <ul className="pagination">
-                        { this.pageButtons.map((pageButton, index) => {
-                            return (
-                                <li key={index}
-                                    className={`page-item${ this.props.currentPage === pageButton ? ' active' : ''}`}>
-                                    <a className="page-link" href="#"
-                                        onClick={this.handleClick(pageButton)}>{ pageButton }</a>
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </nav>
-            </Fragment>
-        );
+    if (pageButtons.length === 0 || totalPages === 1) {
+        return null;
     }
+    return (
+        <Fragment>
+            <nav aria-label="Meteorite Database Pagination">
+                <ul className="pagination">
+                    { pageButtons.map((pageButton, index) => {
+                        return (
+                            <li key={index}
+                                className={`page-item${ props.currentPage === pageButton ? ' active' : ''}`}>
+                                <a className="page-link" href="#"
+                                    onClick={handleClick(pageButton)}>{ pageButton }</a>
+                            </li>
+                        );
+                    })}
+                </ul>
+            </nav>
+        </Fragment>
+    );
 }
 
 /* goToPage - is a function that will be called with data

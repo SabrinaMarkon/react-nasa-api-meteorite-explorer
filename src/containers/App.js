@@ -8,7 +8,7 @@ import Pagination from '../components/Pagination';
 import Footer from '../components/Footer';
 import axios from 'axios';
 
-const PAGE_LIMIT = 20;
+const PAGE_LIMIT = 200;
 
 export default class App extends Component {
     constructor (props) {
@@ -18,8 +18,7 @@ export default class App extends Component {
             errorMessage: '',
             searchField: '',
             searchInput: '',
-            currentPage: 1,
-            totalRecords: 0
+            currentPage: 1
         };
         this.doSearch = this.doSearch.bind(this);
         this.goToPage = this.goToPage.bind(this);
@@ -65,40 +64,6 @@ export default class App extends Component {
 
             // Add search info since it was submitted.
             API_URL = `https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=${PAGE_LIMIT}&$offset=${offset}&${searchField}='${searchInput}'`;
-
-            // Get total count of all matching records:
-            let TOTALCOUNT_URL = "https://data.nasa.gov/resource/gh4g-9sfh.json";
-            axios.get(TOTALCOUNT_URL + "?$select=count(*)&" + searchField + "='" + searchInput + "'")
-                .then(res => {
-                    if (this._isMounted) {
-                        const countResults = res.data[0].count;
-                        console.log(countResults);
-                    }
-                })
-                .catch(err => {
-                    this.setState({
-                        searchResults: [],
-                        errorMessage: err.response.data.code,
-                        currentPage: 1
-                    });
-                });
-        } else {
-            // Get total count of all records since no search parameters are included:
-            let TOTALCOUNT_URL = "https://data.nasa.gov/resource/gh4g-9sfh.json";
-            axios.get(TOTALCOUNT_URL + "?$select=count(*)")
-                .then(res => {
-                    if (this._isMounted) {
-                        const countResults = res.data[0].count;
-                        console.log(countResults);
-                    }
-                })
-                .catch(err => {
-                    this.setState({
-                        searchResults: [],
-                        errorMessage: err.response.data.code,
-                        currentPage: 1
-                    });
-                });
         }
 
         axios.get(API_URL)
@@ -161,7 +126,6 @@ export default class App extends Component {
                     searchField={this.state.searchField}
                     searchInput={this.state.searchInput}
                     currentPage={this.state.currentPage}
-                    totalRecords={this.state.totalRecords}
                 />
                 </>
                 }

@@ -63,15 +63,23 @@ export default function Pagination (props) {
         <Fragment>
             <div className="pagination-wrapper" aria-label="Meteorite Database Pagination">
                 <ul className="pagination">
+                    <li key="leftkey" className="page-item">
+                        <a className="page-link arrow-link" href="#"
+                            onClick={handleClick(1)}>&laquo;</a>
+                    </li>
                     { pageButtons.map((pageButton, index) => {
                         return (
                             <li key={index}
                                 className={`page-item${ props.currentPage === pageButton ? ' active' : ''}`}>
-                                <a className="page-link" href="#"
+                                <a className="page-link arrow-link" href="#"
                                     onClick={handleClick(pageButton)}>{ pageButton }</a>
                             </li>
                         );
                     })}
+                    <li key="rightkey" className="page-item">
+                        <a className="page-link" href="#"
+                            onClick={handleClick(pageButtons.length)}>&raquo;</a>
+                    </li>
                 </ul>
             </div>
         </Fragment>

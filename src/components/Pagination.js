@@ -57,6 +57,42 @@ export default function Pagination (props) {
         });
     };
 
+    const renderLeftPageButtons = (() => {
+        if (props.currentPage > PAGE_NEIGHBORS) {
+            // include the < and <<
+            return (
+                <>
+                <li key="doubleleft" className="page-item">
+                    <a className="page-link arrow-link" href="#"
+                        onClick={handleClick(1)}>&lt;&lt;</a>
+                </li>
+                <li key="singleleft" className="page-item">
+                    <a className="page-link arrow-link" href="#"
+                        onClick={handleClick(props.currentPage - 1)}>&lt;</a>
+                </li>
+                </>
+            );
+        }
+    })();
+
+    const renderRightPageButtons = (() => {
+        if (props.currentPage < pageButtons.length - PAGE_NEIGHBORS) {
+            // include the > and >>
+            return (
+                <>
+                <li key="singleright" className="page-item">
+                    <a className="page-link arrow-link" href="#"
+                        onClick={handleClick(props.currentPage + 1)}>&gt;</a>
+                </li>
+                <li key="doubleright" className="page-item">
+                    <a className="page-link arrow-link" href="#"
+                        onClick={handleClick(pageButtons.length)}>&gt;&gt;</a>
+                </li>
+                </>
+            );
+        }
+    })();
+
     const renderPageButtons = pageButtons.map((pageButton, index) => {
         // For large datasets we only want to show #PAGE_NEIGHBORS pagination buttons on each side of the current page,
         // except for pages #1 and the last page:
@@ -64,11 +100,21 @@ export default function Pagination (props) {
             pageButton === pageButtons.length ||
             (pageButton >= props.currentPage - PAGE_NEIGHBORS && pageButton <= props.currentPage + PAGE_NEIGHBORS)) {
             return (
+                <>
+                {
+                    (pageButton === pageButtons.length) &&
+                    <li key="rightdots">...</li>
+                }
                 <li key={index}
                     className={`page-item${ props.currentPage === pageButton ? ' active' : ''}`}>
                     <a className="page-link arrow-link" href="#"
                         onClick={handleClick(pageButton)}>{ pageButton }</a>
                 </li>
+                {
+                    (pageButton === 1) &&
+                    <li key="leftdots">...</li>
+                }
+                </>
             );
         }
     });
@@ -80,15 +126,9 @@ export default function Pagination (props) {
         <Fragment>
             <div className="pagination-wrapper" aria-label="Meteorite Database Pagination">
                 <ul className="pagination">
-                    <li key="leftkey" className="page-item">
-                        <a className="page-link arrow-link" href="#"
-                            onClick={handleClick(1)}>&lt;&lt;</a>
-                    </li>
+                    { renderLeftPageButtons }
                     { renderPageButtons }
-                    <li key="rightkey" className="page-item">
-                        <a className="page-link" href="#"
-                            onClick={handleClick(pageButtons.length)}>&gt;&gt;</a>
-                    </li>
+                    { renderRightPageButtons }
                 </ul>
             </div>
         </Fragment>

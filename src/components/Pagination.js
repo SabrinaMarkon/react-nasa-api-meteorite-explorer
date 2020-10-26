@@ -26,20 +26,26 @@ export default function Pagination (props) {
     }
 
     useEffect(() => {
+        let isCancelled = false;
         (async function getPaginationButtons () {
             try {
                 const resp = await axios.get(TOTALCOUNT_URL);
                 const totalRecords = parseInt(resp.data[0].count, 10);
                 // Figure out how many pages and pagination buttons there should be:
                 const totalPages = Math.ceil(totalRecords / props.pageLimit);
-                setTotalPages(totalPages);
                 let pageButtons = range(1, totalPages);
-                setpageButtons(pageButtons);
+                if (!isCancelled) {
+                    setTotalPages(totalPages);
+                    setpageButtons(pageButtons);
+                }
             } catch (err) {
                 // Handle Error Here
                 console.error(err);
             }
         })();
+        return () => {
+            isCancelled = true;
+        };
     }, [props.searchInput]);
 
     const handleClick = pageButton => event => {

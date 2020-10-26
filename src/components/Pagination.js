@@ -16,6 +16,7 @@ const range = (from, to, step = 1) => {
 };
 
 export default function Pagination (props) {
+    const PAGE_NEIGHBORS = 2; // How many pagination buttons should on each side of the current page's button.
     const [totalPages, setTotalPages] = useState(1);
     const [pageButtons, setpageButtons] = useState([]);
 
@@ -56,6 +57,22 @@ export default function Pagination (props) {
         });
     };
 
+    const renderPageButtons = pageButtons.map((pageButton, index) => {
+        // For large datasets we only want to show #PAGE_NEIGHBORS pagination buttons on each side of the current page,
+        // except for pages #1 and the last page:
+        if (pageButton === 1 ||
+            pageButton === pageButtons.length ||
+            (pageButton >= props.currentPage - PAGE_NEIGHBORS && pageButton <= props.currentPage + PAGE_NEIGHBORS)) {
+            return (
+                <li key={index}
+                    className={`page-item${ props.currentPage === pageButton ? ' active' : ''}`}>
+                    <a className="page-link arrow-link" href="#"
+                        onClick={handleClick(pageButton)}>{ pageButton }</a>
+                </li>
+            );
+        }
+    });
+
     if (pageButtons.length === 0 || totalPages === 1) {
         return null;
     }
@@ -65,20 +82,12 @@ export default function Pagination (props) {
                 <ul className="pagination">
                     <li key="leftkey" className="page-item">
                         <a className="page-link arrow-link" href="#"
-                            onClick={handleClick(1)}>&laquo;</a>
+                            onClick={handleClick(1)}>&lt;&lt;</a>
                     </li>
-                    { pageButtons.map((pageButton, index) => {
-                        return (
-                            <li key={index}
-                                className={`page-item${ props.currentPage === pageButton ? ' active' : ''}`}>
-                                <a className="page-link arrow-link" href="#"
-                                    onClick={handleClick(pageButton)}>{ pageButton }</a>
-                            </li>
-                        );
-                    })}
+                    { renderPageButtons }
                     <li key="rightkey" className="page-item">
                         <a className="page-link" href="#"
-                            onClick={handleClick(pageButtons.length)}>&raquo;</a>
+                            onClick={handleClick(pageButtons.length)}>&gt;&gt;</a>
                     </li>
                 </ul>
             </div>

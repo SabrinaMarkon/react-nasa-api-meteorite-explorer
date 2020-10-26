@@ -121,7 +121,6 @@ export default class App extends Component {
                 <ResultsContainer searchResults={this.state.searchResults} currentPage={this.state.currentPage} />
                 <Pagination
                     pageLimit={PAGE_LIMIT}
-                    pageNeighbors={0}
                     goToPage={this.goToPage}
                     searchField={this.state.searchField}
                     searchInput={this.state.searchInput}

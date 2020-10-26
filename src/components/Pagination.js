@@ -24,7 +24,6 @@ export default function Pagination (props) {
         TOTALCOUNT_URL = "https://data.nasa.gov/resource/gh4g-9sfh.json?$select=count%28*%29&" +
         props.searchField + "=%27" + props.searchInput + "%27";
     }
-
     useEffect(() => {
         let isCancelled = false;
         (async function getPaginationButtons () {
@@ -62,7 +61,7 @@ export default function Pagination (props) {
     }
     return (
         <Fragment>
-            <nav aria-label="Meteorite Database Pagination">
+            <div className="pagination-wrapper" aria-label="Meteorite Database Pagination">
                 <ul className="pagination">
                     { pageButtons.map((pageButton, index) => {
                         return (
@@ -74,7 +73,7 @@ export default function Pagination (props) {
                         );
                     })}
                 </ul>
-            </nav>
+            </div>
         </Fragment>
     );
 }

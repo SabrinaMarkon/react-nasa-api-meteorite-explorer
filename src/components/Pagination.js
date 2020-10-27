@@ -1,0 +1,140 @@
+import React, { Fragment, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import axios from 'axios';
+// eslint-disable-next-line no-unused-vars
+import regeneratorRuntime from 'regenerator-runtime'; // async/await support for babel.
+
+// Create a range of numbers ie. range(1, 5) => [1, 2, 3, 4, 5]
+const range = (from, to, step = 1) => {
+    let i = from;
+    const range = [];
+    while (i <= to) {
+        range.push(i);
+        i += step;
+    }
+    return range;
+};
+
+export default function Pagination (props) {
+    const PAGE_NEIGHBORS = 2; // How many pagination buttons should on each side of the current page's button.
+    const [totalPages, setTotalPages] = useState(1);
+    const [pageButtons, setpageButtons] = useState([]);
+
+    let TOTALCOUNT_URL = "https://data.nasa.gov/resource/gh4g-9sfh.json?$select=count%28*%29";
+    if (props.searchInput) {
+        TOTALCOUNT_URL = "https://data.nasa.gov/resource/gh4g-9sfh.json?$select=count%28*%29&" +
+        props.searchField + "=%27" + props.searchInput + "%27";
+    }
+    useEffect(() => {
+        let isCancelled = false;
+        (async function getPaginationButtons () {
+            try {
+                const resp = await axios.get(TOTALCOUNT_URL);
+                const totalRecords = parseInt(resp.data[0].count, 10);
+                // Figure out how many pages and pagination buttons there should be:
+                const totalPages = Math.ceil(totalRecords / props.pageLimit);
+                let pageButtons = range(1, totalPages);
+                if (!isCancelled) {
+                    setTotalPages(totalPages);
+                    setpageButtons(pageButtons);
+                }
+            } catch (err) {
+                // Handle Error Here
+                console.error(err);
+            }
+        })();
+        return () => {
+            isCancelled = true;
+        };
+    }, [props.searchInput]);
+
+    const handleClick = pageButton => event => {
+        event.preventDefault();
+        props.goToPage({
+            searchField: props.searchField,
+            searchInput: props.searchInput,
+            currentPage: pageButton
+        });
+    };
+
+    const renderLeftPageButtons = (() => {
+        if (props.currentPage > PAGE_NEIGHBORS) {
+            // include the < and <<
+            return (
+                <>
+                <li key="doubleleft" className="page-item">
+                    <a className="page-link arrow-link" href="#"
+                        onClick={handleClick(1)}>&lt;&lt;</a>
+                </li>
+                <li key="singleleft" className="page-item">
+                    <a className="page-link arrow-link" href="#"
+                        onClick={handleClick(props.currentPage - 1)}>&lt;</a>
+                </li>
+                </>
+            );
+        }
+    })();
+
+    const renderRightPageButtons = (() => {
+        if (props.currentPage < pageButtons.length - PAGE_NEIGHBORS) {
+            // include the > and >>
+            return (
+                <>
+                <li key="singleright" className="page-item">
+                    <a className="page-link arrow-link" href="#"
+                        onClick={handleClick(props.currentPage + 1)}>&gt;</a>
+                </li>
+                <li key="doubleright" className="page-item">
+                    <a className="page-link arrow-link" href="#"
+                        onClick={handleClick(pageButtons.length)}>&gt;&gt;</a>
+                </li>
+                </>
+            );
+        }
+    })();
+
+    const renderPageButtons = pageButtons.map((pageButton, index) => {
+        // For large datasets we only want to show #PAGE_NEIGHBORS pagination buttons on each side of the current page,
+        // except for pages #1 and the last page:
+        if (pageButton === 1 ||
+            pageButton === pageButtons.length ||
+            (pageButton >= props.currentPage - PAGE_NEIGHBORS && pageButton <= props.currentPage + PAGE_NEIGHBORS)) {
+            return (
+                <>
+                <li key={index}
+                    className={`page-item${ props.currentPage === pageButton ? ' active' : ''}`}>
+                    <a className="page-link arrow-link" href="#"
+                        onClick={handleClick(pageButton)}>{ pageButton }</a>
+                </li>
+                </>
+            );
+        }
+    });
+
+    if (pageButtons.length === 0 || totalPages === 1) {
+        return null;
+    }
+    return (
+        <Fragment>
+            <div className="pagination-wrapper" aria-label="Meteorite Database Pagination">
+                <ul className="pagination">
+                    { renderLeftPageButtons }
+                    { renderPageButtons }
+                    { renderRightPageButtons }
+                </ul>
+            </div>
+        </Fragment>
+    );
+}
+
+/* goToPage - is a function that will be called with data
+of the current pagination state only when the current page changes. */
+Pagination.propTypes = {
+    pageLimit: PropTypes.number,
+    pageNeighbors: PropTypes.number,
+    goToPage: PropTypes.func,
+    searchField: PropTypes.string,
+    searchInput: PropTypes.string,
+    currentPage: PropTypes.number,
+    totalRecords: PropTypes.number
+};

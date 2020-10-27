@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 
 export default class ResultHeadings extends Component {
-
-  render() {
-    return (
+    render () {
+        return (
       <>
       <div className="grid-item grid-heading">Name</div>
       <div className="grid-item grid-heading">Id</div>
@@ -15,6 +14,6 @@ export default class ResultHeadings extends Component {
       <div className="grid-item grid-heading">Latitude</div>
       <div className="grid-item grid-heading">Longitude</div>
       </>
-    );
-  }
+        );
+    }
 }

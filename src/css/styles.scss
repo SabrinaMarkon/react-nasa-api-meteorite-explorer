@@ -1,4 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+/* Declare some variables */
+$base-color: #d34182;
+$secondary-color: #fff;
+$tertiary-color: #bb41d3;
+$light-background: lighten($base-color, 12.5%);
+$dark-background: darken($base-color, 12.5%);
 body {
   padding: 0;
   margin: 0;
@@ -7,7 +13,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  color: #fff;
+  color: $secondary-color;
   font-family: 'Roboto', sans-serif;
 }
 .grid {
@@ -21,18 +27,18 @@ body {
   min-width: 0;
 }
 .grid > .grid-item {
-  border: 1px solid #fff;
+  border: 1px solid $secondary-color;
   padding: 10px;
   overflow: hidden;
   min-width: 0;
 }
 .grid-heading {
-  background: #d34182;
-  color: #fff;
+  background: $base-color;
+  color: $secondary-color;
 }
 .form-input {
-  background: #d34182;
-  color: #fff;
+  background: $base-color;
+  color: $secondary-color;
   padding: 10px;
   margin: 3px;
   font-family: 'Roboto', sans-serif;
@@ -40,8 +46,8 @@ body {
 .user-message {
   max-width: 400px;
   background:#ba38cc;
-  color: #fff;
-  border: 2px solid #fff;
+  color: $secondary-color;
+  border: 2px solid $secondary-color;
   padding: 10px;
   margin: auto;
   position: relative;
@@ -88,7 +94,7 @@ video {
   background-size: cover;
 }
 .ParallaxVideo h1 {
-  color: #fff;
+  color: $secondary-color;
   font-size: 8rem;
   line-height: 1.1;
   text-align: center;
@@ -104,7 +110,7 @@ video {
   width: 100%;
   text-align: center;
   margin-top: 40px; 
-  color: #FFF;
+  color: $secondary-color;
   font-family: 'Roboto', sans-serif;
 }
 .center-align {
@@ -134,26 +140,67 @@ footer {
   right: 0;
   bottom: 0;
 }
+footer {
+  margin-top: 10px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
 #madewithlove {
-  font-size: 1.2rem;
+  font-size: 1.3rem !important;
+  font-weight: 900 !important;
 }
 #madewithlove-name {
   font-family: 'Roboto', sans-serif !important;
 }
 #madewithlove-name, #madewithlove-heart {
   text-shadow: 0 0 0;
-  color: #d34182;
+  color: $base-color;
 }
 #madewithlove-name:hover {
   text-decoration: none;
-  color: #fff;
+  color: $secondary-color;
 }
 #madewithlove-heart:hover {
-  text-shadow: 1px 1px 1px #fff, -1px -1px 1px #414143;
-  color: #fff; 
+  text-shadow: 1px 1px 1px $secondary-color, -1px -1px 1px #414143;
+  color: $secondary-color; 
 }
-.pagination {
-  margin-top: 25px;
+.pagination-wrapper {
+  width: 75%;
+  margin: auto;
+  ul.pagination {
+    margin-bottom: 50px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-left: -45px;
+    li {
+      display: inline-block;
+      margin-left: 5px;
+      height: 50px;
+    }
+    li.page-item.active {
+      a.page-link {
+        color: $secondary-color;
+        background-color: $tertiary-color;
+        border-color: $base-color;
+      }
+    }
+    a.page-link {
+      padding: 0.75rem 1rem;
+      min-width: 3.5rem;
+      text-align: center;
+      box-shadow: none;
+      color: $secondary-color;
+      background: $base-color;
+      border-color:$secondary-color;
+      font-weight: 900;
+      font-size: 1rem;
+      text-decoration: none;
+      &:hover {
+        background-color: $light-background;
+      }
+    }
+  }
 }
 
 /* Media Queries */

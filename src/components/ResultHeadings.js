@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class ResultHeadings extends Component {
-    render () {
-        return (
+export default function ResultHeadings () {
+    return (
       <>
       <div className="grid-item grid-heading">Name</div>
       <div className="grid-item grid-heading">Id</div>
@@ -14,6 +13,5 @@ export default class ResultHeadings extends Component {
       <div className="grid-item grid-heading">Latitude</div>
       <div className="grid-item grid-heading">Longitude</div>
       </>
-        );
-    }
+    );
 }

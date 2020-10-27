@@ -97,13 +97,11 @@ export default function Pagination (props) {
         if (pageButton.pagenum >= props.currentPage - PAGE_NEIGHBORS &&
             pageButton.pagenum <= props.currentPage + PAGE_NEIGHBORS) {
             return (
-                <>
                 <li key={pageButton.id} id={pageButton.id}
                     className={`page-item${ props.currentPage === pageButton.pagenum ? ' active' : ''}`}>
                     <a className="page-link arrow-link" href="#"
                         onClick={handleClick(pageButton.pagenum)}>{ pageButton.pagenum }</a>
                 </li>
-                </>
             );
         }
     });

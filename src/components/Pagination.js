@@ -96,9 +96,7 @@ export default function Pagination (props) {
     const renderPageButtons = pageButtons.map((pageButton, index) => {
         // For large datasets we only want to show #PAGE_NEIGHBORS pagination buttons on each side of the current page,
         // except for pages #1 and the last page:
-        if (pageButton === 1 ||
-            pageButton === pageButtons.length ||
-            (pageButton >= props.currentPage - PAGE_NEIGHBORS && pageButton <= props.currentPage + PAGE_NEIGHBORS)) {
+        if (pageButton >= props.currentPage - PAGE_NEIGHBORS && pageButton <= props.currentPage + PAGE_NEIGHBORS) {
             return (
                 <>
                 <li key={index}

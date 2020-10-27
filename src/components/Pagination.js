@@ -16,7 +16,8 @@ const range = (from, to, step = 1) => {
 };
 
 export default function Pagination (props) {
-    const PAGE_NEIGHBORS = 2; // How many pagination buttons should on each side of the current page's button.
+    const PAGE_NEIGHBORS = 5; // How many pagination buttons should on each side of the current page's button.
+    const [totalRecords, setTotalRecords] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
     const [pageButtons, setpageButtons] = useState([]);
 
@@ -35,6 +36,7 @@ export default function Pagination (props) {
                 const totalPages = Math.ceil(totalRecords / props.pageLimit);
                 let pageButtons = range(1, totalPages);
                 if (!isCancelled) {
+                    setTotalRecords(totalRecords);
                     setTotalPages(totalPages);
                     setpageButtons(pageButtons);
                 }
@@ -115,6 +117,7 @@ export default function Pagination (props) {
     return (
         <Fragment>
             <div className="pagination-wrapper" aria-label="Meteorite Database Pagination">
+                <div className="pagination-totals">Results: {totalRecords} records in {totalPages} pages</div>
                 <ul className="pagination">
                     { renderLeftPageButtons }
                     { renderPageButtons }
@@ -133,6 +136,5 @@ Pagination.propTypes = {
     goToPage: PropTypes.func,
     searchField: PropTypes.string,
     searchInput: PropTypes.string,
-    currentPage: PropTypes.number,
-    totalRecords: PropTypes.number
+    currentPage: PropTypes.number
 };

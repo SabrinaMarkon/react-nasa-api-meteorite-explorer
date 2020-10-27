@@ -168,6 +168,10 @@ footer {
 .pagination-wrapper {
   width: 75%;
   margin: auto;
+  div.pagination-totals {
+    text-align: center;
+    margin: 0 auto 30px;
+  }
   ul.pagination {
     margin-bottom: 50px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);

@@ -99,7 +99,7 @@ export default function Pagination (props) {
             return (
                 <li key={pageButton.id} id={pageButton.id}
                     className={`page-item${ props.currentPage === pageButton.pagenum ? ' active' : ''}`}>
-                    <a className="page-link arrow-link" href="#"
+                    <a className="page-link" href="#"
                         onClick={handleClick(pageButton.pagenum)}>{ pageButton.pagenum }</a>
                 </li>
             );

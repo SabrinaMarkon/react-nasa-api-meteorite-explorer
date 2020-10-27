@@ -3,7 +3,7 @@ import ResultHeadings from '../components/ResultHeadings';
 import PropTypes from 'prop-types';
 
 export default function ResultsContainer (props) {
-    let searchResults = Array.from(this.props.searchResults);
+    let searchResults = Array.from(props.searchResults);
 
     // format the year property to only show 4 digit year.
     searchResults.forEach(result => {

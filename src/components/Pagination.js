@@ -61,11 +61,11 @@ export default function Pagination (props) {
             return (
                 <>
                 <li key="doubleleft" className="page-item">
-                    <a className="page-link arrow-link" href="#"
+                    <a className="page-link arrow-link" href="#" aria-label="Go to first page"
                         onClick={handleClick(1)}>&lt;&lt;</a>
                 </li>
                 <li key="singleleft" className="page-item">
-                    <a className="page-link arrow-link" href="#"
+                    <a className="page-link arrow-link" href="#" aria-label="Go to previous page"
                         onClick={handleClick(props.currentPage - 1)}>&lt;</a>
                 </li>
                 </>
@@ -79,11 +79,11 @@ export default function Pagination (props) {
             return (
                 <>
                 <li key="singleright" className="page-item">
-                    <a className="page-link arrow-link" href="#"
+                    <a className="page-link arrow-link" href="#" aria-label="Go to next page"
                         onClick={handleClick(props.currentPage + 1)}>&gt;</a>
                 </li>
                 <li key="doubleright" className="page-item">
-                    <a className="page-link arrow-link" href="#"
+                    <a className="page-link arrow-link" href="#" aria-label="Go to last page"
                         onClick={handleClick(pageButtons.length)}>&gt;&gt;</a>
                 </li>
                 </>
@@ -99,7 +99,7 @@ export default function Pagination (props) {
             return (
                 <li key={pageButton.id} id={pageButton.id}
                     className={`page-item${ props.currentPage === pageButton.pagenum ? ' active' : ''}`}>
-                    <a className="page-link" href="#"
+                    <a className="page-link" href="#" aria-label={'go to page ' + pageButton.pagenum}
                         onClick={handleClick(pageButton.pagenum)}>{ pageButton.pagenum }</a>
                 </li>
             );

@@ -101,19 +101,11 @@ export default function Pagination (props) {
             (pageButton >= props.currentPage - PAGE_NEIGHBORS && pageButton <= props.currentPage + PAGE_NEIGHBORS)) {
             return (
                 <>
-                {
-                    (pageButton === pageButtons.length) &&
-                    <li key="rightdots">...</li>
-                }
                 <li key={index}
                     className={`page-item${ props.currentPage === pageButton ? ' active' : ''}`}>
                     <a className="page-link arrow-link" href="#"
                         onClick={handleClick(pageButton)}>{ pageButton }</a>
                 </li>
-                {
-                    (pageButton === 1) &&
-                    <li key="leftdots">...</li>
-                }
                 </>
             );
         }

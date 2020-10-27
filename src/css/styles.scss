@@ -2,7 +2,9 @@
 /* Declare some variables */
 $base-color: #d34182;
 $secondary-color: #fff;
+$tertiary-color: #bb41d3;
 $light-background: lighten($base-color, 12.5%);
+$dark-background: darken($base-color, 12.5%);
 body {
   padding: 0;
   margin: 0;
@@ -179,7 +181,7 @@ footer {
     li.page-item.active {
       a.page-link {
         color: $secondary-color;
-        background-color: $light-background;
+        background-color: $tertiary-color;
         border-color: $base-color;
       }
     }

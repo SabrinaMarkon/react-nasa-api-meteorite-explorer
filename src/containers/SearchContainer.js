@@ -1,24 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Search from '../components/Search';
 import PropTypes from 'prop-types';
 
-export default class SearchContainer extends Component {
-    constructor (props) {
-        super(props);
-        this.goToPage = this.goToPage.bind(this);
-    }
+export default function SearchContainer (props) {
+    const goToPage = (searchParams) => {
+        props.goToPage(searchParams);
+    };
 
-  goToPage = (searchParams) => {
-      this.props.goToPage(searchParams);
-  }
-
-  render () {
-      return (
-          <div className="center-align pt-2">
-              <Search goToPage={this.goToPage} currentPage={this.props.currentPage} />
-          </div>
-      );
-  }
+    return (
+        <div className="center-align pt-2">
+            <Search goToPage={goToPage} currentPage={props.currentPage} />
+        </div>
+    );
 }
 
 SearchContainer.propTypes = {

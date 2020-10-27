@@ -4,17 +4,6 @@ import axios from 'axios';
 // eslint-disable-next-line no-unused-vars
 import regeneratorRuntime from 'regenerator-runtime'; // async/await support for babel.
 
-// Create a range of numbers ie. range(1, 5) => [1, 2, 3, 4, 5]
-const range = (from, to, step = 1) => {
-    let i = from;
-    const range = [];
-    while (i <= to) {
-        range.push(i);
-        i += step;
-    }
-    return range;
-};
-
 export default function Pagination (props) {
     const PAGE_NEIGHBORS = 5; // How many pagination buttons should on each side of the current page's button.
     const [totalRecords, setTotalRecords] = useState(0);
@@ -34,7 +23,14 @@ export default function Pagination (props) {
                 const totalRecords = parseInt(resp.data[0].count, 10);
                 // Figure out how many pages and pagination buttons there should be:
                 const totalPages = Math.ceil(totalRecords / props.pageLimit);
-                let pageButtons = range(1, totalPages);
+                let pageButtons = [];
+                for (let i = 1; i <= totalPages; i++) {
+                    pageButtons.push({
+                        id: i,
+                        pagenum: i
+                    // eslint-disable-next-line semi
+                    });
+                }
                 if (!isCancelled) {
                     setTotalRecords(totalRecords);
                     setTotalPages(totalPages);
@@ -95,16 +91,17 @@ export default function Pagination (props) {
         }
     })();
 
-    const renderPageButtons = pageButtons.map((pageButton, index) => {
+    const renderPageButtons = pageButtons.map((pageButton) => {
         // For large datasets we only want to show #PAGE_NEIGHBORS pagination buttons on each side of the current page,
         // except for pages #1 and the last page:
-        if (pageButton >= props.currentPage - PAGE_NEIGHBORS && pageButton <= props.currentPage + PAGE_NEIGHBORS) {
+        if (pageButton.pagenum >= props.currentPage - PAGE_NEIGHBORS &&
+            pageButton.pagenum <= props.currentPage + PAGE_NEIGHBORS) {
             return (
                 <>
-                <li key={index}
-                    className={`page-item${ props.currentPage === pageButton ? ' active' : ''}`}>
+                <li key={pageButton.id} id={pageButton.id}
+                    className={`page-item${ props.currentPage === pageButton.pagenum ? ' active' : ''}`}>
                     <a className="page-link arrow-link" href="#"
-                        onClick={handleClick(pageButton)}>{ pageButton }</a>
+                        onClick={handleClick(pageButton.pagenum)}>{ pageButton.pagenum }</a>
                 </li>
                 </>
             );

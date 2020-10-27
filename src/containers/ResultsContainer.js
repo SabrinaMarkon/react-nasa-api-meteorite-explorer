@@ -13,11 +13,11 @@ export default class ResultsContainer extends Component {
             }
         });
 
-        let results = searchResults.map((row, i) => {
+        let results = searchResults.map((row) => {
             return (
-                <Fragment key={i}>
-                    <div className="grid-item" key={i}>{row.name}</div>
-                    <div className="grid-item">{i}</div>
+                <Fragment key={row.id}>
+                    <div className="grid-item">{row.name}</div>
+                    <div className="grid-item">{row.id}</div>
                     <div className="grid-item">{row.nametype}</div>
                     <div className="grid-item">{row.recclass}</div>
                     <div className="grid-item">{row.mass}</div>

@@ -7,7 +7,8 @@
     "test": "jest --colors",
     "test:watch": "jest --watch --colors",
     "test:coverage": "jest --coverage --colors",
-    "start": "webpack-dev-server --mode development",
+    "start": "webpack-dev-server --mode development --open --hot",
+    "build": "webpack --mode production",
     "eslint-fix": "eslint --fix \"src/**/*.js\"",
     "scss": "node-sass --watch scss -o css"
   },

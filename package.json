@@ -35,7 +35,7 @@
     "html-webpack-plugin": "^3.2.0",
     "kind-of": "^6.0.3",
     "minimist": "^0.2.1",
-    "node-forge": "^0.10.0",
+    "node-forge": "^1.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",

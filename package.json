@@ -32,7 +32,7 @@
   "homepage": "https://github.com/SabrinaMarkon/react-nasa-api-meteorite-explorer#readme",
   "dependencies": {
     "axios": "^0.21.2",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^5.5.0",
     "kind-of": "^6.0.3",
     "minimist": "^0.2.1",
     "node-forge": "^0.10.0",

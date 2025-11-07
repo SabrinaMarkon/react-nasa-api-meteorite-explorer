@@ -44,7 +44,7 @@ export default class App extends Component {
 
         /* -1 to make offset zero-based (since NASA API wants 0 for the first page's offset) */
         const offset = (currentPage - 1) * PAGE_LIMIT;
-        let API_URL = `https://data.nasa.gov/resource/gh4g-9sfh.json?$order=name&$limit=${PAGE_LIMIT}&$offset=${offset}`;
+        let API_URL = `https://data.nasa.gov/resource/y77d-th95.json?$order=name&$limit=${PAGE_LIMIT}&$offset=${offset}`;
 
         // When searchInput is not blank:
         if (searchInput) {
